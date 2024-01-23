@@ -1,13 +1,15 @@
 import CardComponent from '../card/card';
+import { Card } from '../../types/card';
 
-function CardsListComponent(): JSX.Element {
-  const cardList = Array.from({ length: 9 }, (_, index) => (
-    <CardComponent key={index} />
-  ));
+type CardsListProps = {
+  cards: Card[];
+}
+
+function CardsListComponent({cards}: CardsListProps): JSX.Element {
 
   return (
     <div className="cards catalog__cards">
-      {cardList}
+      {cards.map((card) => <CardComponent key={card.id} card={card}/>)}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import CardsListComponent from '../../components/cards-list/cards-list';
+import { Cards } from '../../mocks/cards';
 
 function MainPageComponent(): JSX.Element {
   return (
@@ -323,7 +324,7 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent />
+                  <CardsListComponent cards={Cards} />
 
                   <div className="pagination">
                     <ul className="pagination__list">
