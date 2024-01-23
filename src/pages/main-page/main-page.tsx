@@ -1,9 +1,28 @@
 import CardsListComponent from '../../components/cards-list/cards-list';
-import { Cards } from '../../mocks/cards';
+// import { Cards } from '../../mocks/cards';
+import { Card } from '../../types/card';
+import { Helmet } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { getCardsDataLoadingStatus, getCards } from '../../store/app-data/selectors';
 
 function MainPageComponent(): JSX.Element {
+
+  const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
+
+  const cards: Card[] | null = useAppSelector(getCards);
+
+  if (isCardsLoading || cards === null) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>Camera Shop</title>
+      </Helmet>
       <header className="header" id="header">
         <div className="container">
           <a
@@ -324,7 +343,7 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent cards={Cards} />
+                  <CardsListComponent cards={cards} />
 
                   <div className="pagination">
                     <ul className="pagination__list">

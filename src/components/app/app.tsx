@@ -1,12 +1,40 @@
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import MainPageComponent from '../../pages/main-page/main-page';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import { getCardsDataLoadingStatus } from '../../store/app-data/selectors';
+import { fetchCardsAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useEffect } from 'react';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      dispatch(fetchCardsAction());
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch]);
+
+  const isCardsDataLoading = useAppSelector(getCardsDataLoadingStatus);
+
+  if (isCardsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
-      <Router>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Root}
@@ -25,7 +53,7 @@ function App(): JSX.Element {
           element={<Page404 />}
         /> */}
         </Routes>
-      </Router>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
