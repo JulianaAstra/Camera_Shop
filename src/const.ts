@@ -14,3 +14,5 @@ export const NameSpace = {
 export enum APIRoute {
   Cards = '/cameras',
 }
+
+export const totalStars = 5;

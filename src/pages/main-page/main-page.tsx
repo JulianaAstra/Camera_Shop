@@ -1,5 +1,4 @@
 import CardsListComponent from '../../components/cards-list/cards-list';
-// import { Cards } from '../../mocks/cards';
 import { Card } from '../../types/card';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';

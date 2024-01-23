@@ -1,4 +1,5 @@
 import { Card } from '../../types/card';
+import RateStarsComponent from '../../rate-stars/rate-stars';
 
 type CardProps = {
   card: Card;
@@ -25,27 +26,7 @@ function CardComponent({card}: CardProps): JSX.Element {
         </picture>
       </div>
       <div className="product-card__info">
-        <div className="rate product-card__rate">
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-full-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <svg width={17} height={16} aria-hidden="true">
-            <use xlinkHref="#icon-star" />
-          </svg>
-          <p className="visually-hidden">Рейтинг: {rating}</p>
-          <p className="rate__count">
-            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
-          </p>
-        </div>
+        <RateStarsComponent rating={rating} reviewCount={reviewCount} />
         <p className="product-card__title">
           {name}
         </p>
