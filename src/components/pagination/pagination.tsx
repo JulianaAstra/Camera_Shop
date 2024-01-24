@@ -31,7 +31,7 @@ const PaginationComponent = () => {
         )}
 
         {[currentPage - 1, currentPage, currentPage + 1].map((pageNumber) => (
-          pageNumber >= 1 &&
+          (pageNumber >= 1 && pageNumber <= 5) &&
           <li key={pageNumber} className={`pagination__item ${pageNumber === currentPage ? 'active' : ''}`}>
             <Link to='#' className={`pagination__link ${pageNumber === currentPage ? 'pagination__link--active' : ''}`} onClick={() => handlePageClick(pageNumber)}>
               {pageNumber}
@@ -39,7 +39,7 @@ const PaginationComponent = () => {
           </li>
         ))}
 
-        {currentPage < 3 && (
+        {currentPage < 4 && (
           <li className="pagination__item">
             <Link to='#' className="pagination__link pagination__link--text" onClick={nextPage}>
               Далее
