@@ -1,23 +1,12 @@
-// PaginationComponent.js
 import { usePagination } from './pagination-context';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 
 const PaginationComponent = () => {
   const { currentPage, setCurrentPage, prevPage, nextPage } = usePagination();
 
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [setCurrentPage]);
-
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
-    // navigate(`${AppRoute.Root}/${pageNumber}`, { replace: true });
   };
-
 
   return (
     <div className="pagination">
