@@ -10,6 +10,7 @@ import { fetchCardsAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useEffect } from 'react';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { PaginationProvider } from '../pagination/pagination-context';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,12 +36,17 @@ function App(): JSX.Element {
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
-        <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={<MainPageComponent />}
-          />
-          {/* <Route
+        <PaginationProvider>
+          <Routes>
+            <Route
+              path={`${AppRoute.Root}`}
+              element={<MainPageComponent />}
+            />
+            <Route
+              path={`${AppRoute.Root}/:pageNumber`}
+              element={<MainPageComponent />}
+            />
+            {/* <Route
           path={`${AppRoute.Product}/:id`}
           element={<ProductPageComponent />}
         />
@@ -52,7 +58,8 @@ function App(): JSX.Element {
           path='*'
           element={<Page404 />}
         /> */}
-        </Routes>
+          </Routes>
+        </PaginationProvider>
       </HistoryRouter>
     </HelmetProvider>
   );

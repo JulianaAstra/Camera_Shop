@@ -4,8 +4,22 @@ import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getCardsDataLoadingStatus, getCards } from '../../store/app-data/selectors';
+import PaginationComponent from '../../components/pagination/pagination';
+import { useState, useEffect } from 'react';
+import { usePagination } from '../../components/pagination/pagination-context';
 
 function MainPageComponent(): JSX.Element {
+
+  const [pageNum, setPageNum] = useState(1);
+
+  const { setCurrentPage } = usePagination();
+
+  useEffect(() => {
+    // Устанавливаем номер страницы при первой загрузке
+    setPageNum(1);
+    // Обновляем текущую страницу в контексте пагинации
+    setCurrentPage(1);
+  }, [setCurrentPage]);
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
 
@@ -17,7 +31,14 @@ function MainPageComponent(): JSX.Element {
     );
   }
 
+  const itemsPerPage = 9;
+  const startIndex = (pageNum - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedCards = cards.slice(startIndex, endIndex);
+
+
   return (
+
     <div className="wrapper">
       <Helmet>
         <title>Camera Shop</title>
@@ -342,38 +363,12 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent cards={cards} />
 
-                  <div className="pagination">
-                    <ul className="pagination__list">
-                      <li className="pagination__item">
-                        <a
-                          className="pagination__link pagination__link--active"
+                  {/* <PaginationProvider> */}
+                  <CardsListComponent cards={displayedCards} />
+                  <PaginationComponent />
+                  {/* </PaginationProvider> */}
 
-                        >
-                      1
-                        </a>
-                      </li>
-                      <li className="pagination__item">
-                        <a className="pagination__link">
-                      2
-                        </a>
-                      </li>
-                      <li className="pagination__item">
-                        <a className="pagination__link">
-                      3
-                        </a>
-                      </li>
-                      <li className="pagination__item">
-                        <a
-                          className="pagination__link pagination__link--text"
-                          // href={}
-                        >
-                      Далее
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
