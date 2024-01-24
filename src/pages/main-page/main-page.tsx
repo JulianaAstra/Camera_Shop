@@ -7,16 +7,17 @@ import { getCardsDataLoadingStatus, getCards } from '../../store/app-data/select
 import PaginationComponent from '../../components/pagination/pagination';
 import { useState, useEffect } from 'react';
 import { usePagination } from '../../components/pagination/pagination-context';
+import { current } from '@reduxjs/toolkit';
 
 function MainPageComponent(): JSX.Element {
 
-  const [pageNum, setPageNum] = useState(1);
+  // const [pageNum, setPageNum] = useState(1);
 
-  const { setCurrentPage } = usePagination();
+  const { setCurrentPage, currentPage } = usePagination();
 
   useEffect(() => {
     // Устанавливаем номер страницы при первой загрузке
-    setPageNum(1);
+    // setPageNum(1);
     // Обновляем текущую страницу в контексте пагинации
     setCurrentPage(1);
   }, [setCurrentPage]);
@@ -32,7 +33,7 @@ function MainPageComponent(): JSX.Element {
   }
 
   const itemsPerPage = 9;
-  const startIndex = (pageNum - 1) * itemsPerPage;
+  const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedCards = cards.slice(startIndex, endIndex);
 

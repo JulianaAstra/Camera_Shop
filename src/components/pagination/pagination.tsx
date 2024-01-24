@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { AppRoute } from '../../const';
 
 const PaginationComponent = () => {
-  const { currentPage, setCurrentPage } = usePagination();
+  const { currentPage, setCurrentPage, prevPage, nextPage } = usePagination();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     setCurrentPage(1);
@@ -15,7 +15,7 @@ const PaginationComponent = () => {
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
-    navigate(`${AppRoute.Root}/${pageNumber}`, { replace: true });
+    // navigate(`${AppRoute.Root}/${pageNumber}`, { replace: true });
   };
 
 
@@ -24,7 +24,7 @@ const PaginationComponent = () => {
       <ul className="pagination__list">
         {currentPage > 1 && (
           <li className="pagination__item">
-            <Link to={`${AppRoute.Root}/${currentPage - 1}`} className="pagination__link pagination__link--text">
+            <Link to='#' className="pagination__link pagination__link--text" onClick={prevPage}>
               Назад
             </Link>
           </li>
@@ -33,7 +33,7 @@ const PaginationComponent = () => {
         {[currentPage - 1, currentPage, currentPage + 1].map((pageNumber) => (
           pageNumber >= 1 &&
           <li key={pageNumber} className={`pagination__item ${pageNumber === currentPage ? 'active' : ''}`}>
-            <Link to={`${AppRoute.Root}/${pageNumber}`} className={`pagination__link ${pageNumber === currentPage ? 'pagination__link--active' : ''}`} onClick={() => handlePageClick(pageNumber)}>
+            <Link to='#' className={`pagination__link ${pageNumber === currentPage ? 'pagination__link--active' : ''}`} onClick={() => handlePageClick(pageNumber)}>
               {pageNumber}
             </Link>
           </li>
@@ -41,7 +41,7 @@ const PaginationComponent = () => {
 
         {currentPage < 3 && (
           <li className="pagination__item">
-            <Link to={`${AppRoute.Root}/${currentPage + 1}`} className="pagination__link pagination__link--text">
+            <Link to='#' className="pagination__link pagination__link--text" onClick={nextPage}>
               Далее
             </Link>
           </li>

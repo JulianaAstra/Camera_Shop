@@ -12,7 +12,7 @@ export const NameSpace = {
 } as const;
 
 export enum APIRoute {
-  Cards = '/cameras',
+  Cards = '/cameras?page=4',
 }
 
 export const totalStars = 5;
