@@ -1,10 +1,11 @@
 // PaginationContext.js
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type PaginationContextType = {
+export type PaginationContextType = {
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type PaginationProviderProps = {
@@ -21,7 +22,7 @@ export const usePagination = (): PaginationContextType => {
   return context;
 };
 
-export const PaginationProvider: React.FC<PaginationProviderProps> = ({ children }) => {
+export const PaginationProvider: React.FC<PaginationProviderProps> = ({ children }: PaginationProviderProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const nextPage = () => setCurrentPage((prevPage) => prevPage + 1);

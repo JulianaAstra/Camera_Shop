@@ -12,15 +12,18 @@ import { useParams } from 'react-router-dom';
 function MainPageComponent(): JSX.Element {
 
   const { setCurrentPage, currentPage } = usePagination();
-  const {pageNumber} = useParams();
+  const {pageNumber}: { pageNumber?: string } = useParams();
 
   useEffect(() => {
     if (!pageNumber) {
       setCurrentPage(1);
       return;
     }
-    setCurrentPage(pageNumber);
-  }, [setCurrentPage]);
+    const pageNumberAsNumber = parseInt(pageNumber, 10);
+    if (!isNaN(pageNumberAsNumber)) {
+      setCurrentPage(pageNumberAsNumber);
+    }
+  }, [setCurrentPage, pageNumber]);
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
 

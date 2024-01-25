@@ -2,10 +2,14 @@ import { usePagination } from './pagination-context';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-const PaginationComponent = ({pagesCount}) => {
+type PaginationComponentProps = {
+  pagesCount: number;
+}
+
+const PaginationComponent = ({pagesCount}: PaginationComponentProps) => {
   const { currentPage, setCurrentPage, prevPage, nextPage } = usePagination();
 
-  const handlePageClick = (pageNumber) => {
+  const handlePageClick = (pageNumber: number) => {
 
     if (pageNumber > pagesCount) {
       return;
