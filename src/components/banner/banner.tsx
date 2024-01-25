@@ -11,15 +11,24 @@ function Banner(): JSX.Element {
 
   const pagination = {
     clickable: true,
+    dynamicBullets: true,
+    dynamicMainBullets: 3,
     renderBullet: function (index, className) {
-      return `<span class="${className}"></span>`;
+      return `<span class="${ className }">${ index + 1 }</span>`;
     },
+  };
+
+  const autoplay = {
+    delay: 3000,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
   };
 
   return (
     <Swiper
+      modules={[Pagination, Autoplay]}
       pagination={pagination}
-      modules={[Pagination]}
+      autoplay={autoplay}
       className='bannerSwiper'
     >
 
