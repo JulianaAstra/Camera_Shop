@@ -37,6 +37,8 @@ function MainPageComponent(): JSX.Element {
   const endIndex = startIndex + itemsPerPage;
   const displayedCards = cards.slice(startIndex, endIndex);
 
+  const pagesCount = Math.ceil(cards.length / itemsPerPage);
+  console.log(pagesCount);
 
   return (
 
@@ -367,7 +369,7 @@ function MainPageComponent(): JSX.Element {
 
                   {/* <PaginationProvider> */}
                   <CardsListComponent cards={displayedCards} />
-                  <PaginationComponent />
+                  <PaginationComponent pagesCount={pagesCount}/>
                   {/* </PaginationProvider> */}
 
                 </div>
