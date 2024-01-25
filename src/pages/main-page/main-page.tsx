@@ -5,21 +5,21 @@ import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getCardsDataLoadingStatus, getCards } from '../../store/app-data/selectors';
 import PaginationComponent from '../../components/pagination/pagination';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePagination } from '../../components/pagination/pagination-context';
-import { current } from '@reduxjs/toolkit';
+import { useParams } from 'react-router-dom';
 
 function MainPageComponent(): JSX.Element {
 
-  // const [pageNum, setPageNum] = useState(1);
-
   const { setCurrentPage, currentPage } = usePagination();
+  const {pageNumber} = useParams();
 
   useEffect(() => {
-    // Устанавливаем номер страницы при первой загрузке
-    // setPageNum(1);
-    // Обновляем текущую страницу в контексте пагинации
-    setCurrentPage(1);
+    if (!pageNumber) {
+      setCurrentPage(1);
+      return;
+    }
+    setCurrentPage(pageNumber);
   }, [setCurrentPage]);
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
@@ -36,9 +36,7 @@ function MainPageComponent(): JSX.Element {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedCards = cards.slice(startIndex, endIndex);
-
   const pagesCount = Math.ceil(cards.length / itemsPerPage);
-  console.log(pagesCount);
 
   return (
 
@@ -366,12 +364,8 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-
-                  {/* <PaginationProvider> */}
                   <CardsListComponent cards={displayedCards} />
                   <PaginationComponent pagesCount={pagesCount}/>
-                  {/* </PaginationProvider> */}
-
                 </div>
               </div>
             </div>
