@@ -1,14 +1,19 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { PromoCards } from '../../mocks/promo';
+// import { PromoCards } from '../../mocks/promo';
 import { SwiperOptions } from 'swiper/types';
+import { PromoCard } from '../../types/promo-card';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import './style.css';
 
-function Banner(): JSX.Element {
+type BannerProps = {
+  promoCards: PromoCard[];
+}
+
+function Banner({promoCards}: BannerProps): JSX.Element {
 
   const pagination: SwiperOptions['pagination'] = {
     clickable: true,
@@ -33,7 +38,7 @@ function Banner(): JSX.Element {
       className='bannerSwiper'
     >
 
-      {PromoCards.map(({id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x}) => (
+      {promoCards.map(({id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x}) => (
         <SwiperSlide key={id}>
           <div className="banner">
             <picture>

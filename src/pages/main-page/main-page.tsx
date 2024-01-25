@@ -3,17 +3,18 @@ import { Card } from '../../types/card';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { getCardsDataLoadingStatus, getCards } from '../../store/app-data/selectors';
+import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors';
 import PaginationComponent from '../../components/pagination/pagination';
 import { useEffect } from 'react';
 import { usePagination } from '../../components/pagination/pagination-context';
 import { useParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner';
+import { PromoCard } from '../../types/promo-card';
 
 function MainPageComponent(): JSX.Element {
 
   const { setCurrentPage, currentPage } = usePagination();
-  const {pageNumber}: { pageNumber?: string } = useParams();
+  const { pageNumber }: { pageNumber?: string } = useParams();
 
   useEffect(() => {
     if (!pageNumber) {
@@ -27,10 +28,13 @@ function MainPageComponent(): JSX.Element {
   }, [setCurrentPage, pageNumber]);
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
+  const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
 
   const cards: Card[] | null = useAppSelector(getCards);
+  const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
+  // console.log(promoCards);
 
-  if (isCardsLoading || cards === null) {
+  if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
       <LoadingScreen />
     );
@@ -134,7 +138,7 @@ function MainPageComponent(): JSX.Element {
         </div>
       </header>
       <main>
-        <Banner />
+        <Banner promoCards={promoCards}/>
 
         <div className="page-content">
           <div className="breadcrumbs">
