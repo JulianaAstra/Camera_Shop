@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Card } from '../types/card';
+import { PromoCard } from '../types/promo-card';
 // import { redirectToRoute } from './action';
 import { APIRoute } from '../const';
 // import { AuthData } from '../types/auth-data';
@@ -12,6 +13,14 @@ export const fetchCardsAction = createAsyncThunk<Card[], undefined, ThunkObjType
   'data/fetchCards', async (_arg, {extra: api}) => {
     const {data} = await
     api.get<Card[]>(APIRoute.Cards);
+    return data;
+  },
+);
+
+export const fetchPromoCardsAction = createAsyncThunk<PromoCard[], undefined, ThunkObjType>(
+  'data/fetchPromoCards', async (_arg, {extra: api}) => {
+    const {data} = await
+    api.get<PromoCard[]>(APIRoute.Promo);
     return data;
   },
 );

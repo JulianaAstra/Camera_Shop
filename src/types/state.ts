@@ -1,8 +1,11 @@
 import { store } from '../store/index';
 import { Card } from './card';
+import { PromoCard } from './promo-card';
 
 export type AppData = {
   cards: Card[] | null;
+  promoCards: PromoCard[] | null;
+  isPromoCardsDataLoading: boolean;
   // detailedQuest: DetailedQuest | null;
   // filteredQuests: Quest[] | null;
   // bookingInfo: Point[] | null;
