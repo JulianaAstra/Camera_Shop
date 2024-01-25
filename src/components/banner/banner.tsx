@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { PromoCards } from '../../mocks/promo';
+import { SwiperOptions } from 'swiper/types';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,7 +10,7 @@ import './style.css';
 
 function Banner(): JSX.Element {
 
-  const pagination = {
+  const pagination: SwiperOptions['pagination'] = {
     clickable: true,
     dynamicBullets: true,
     dynamicMainBullets: 3,
