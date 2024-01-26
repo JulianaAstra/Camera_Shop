@@ -1,4 +1,36 @@
+import { useParams } from 'react-router-dom';
+import { fetchCardAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getCard } from '../../store/app-data/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
+import { Card } from '../../types/card';
+
 function ProductPageComponent(): JSX.Element {
+  const {id} = useParams();
+  const idNumber = parseInt(id, 10);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted && id !== null) {
+      dispatch(fetchCardAction({id: idNumber}));
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, id, idNumber]);
+
+  const card: Card | null = useAppSelector(getCard);
+
+  if (!card) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <div className="wrapper">
       <header className="header" id="header">
@@ -110,7 +142,7 @@ function ProductPageComponent(): JSX.Element {
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link breadcrumbs__link--active">
-                Ретрокамера Das Auge IV
+                    {card.name}
                   </span>
                 </li>
               </ul>
