@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const.ts';
 import { AppData } from '../../types/state.ts';
-import { fetchCardsAction, fetchPromoCardsAction } from '../api-actions.ts';
+import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction } from '../api-actions.ts';
 
 const initialState: AppData = {
   cards: [],
+  card: null,
   promoCards: [],
   isPromoCardsDataLoading: false,
   isCardsDataLoading: false,
+  isCardDataLoading: false,
 };
 
 export const appData = createSlice({
@@ -19,6 +21,9 @@ export const appData = createSlice({
     },
     setPromoCardsDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isPromoCardsDataLoading = action.payload;
+    },
+    setCardDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isCardDataLoading = action.payload;
     },
   },
   extraReducers(builder) {
@@ -36,6 +41,13 @@ export const appData = createSlice({
       .addCase(fetchPromoCardsAction.fulfilled, (state, action) => {
         state.promoCards = action.payload;
         state.isPromoCardsDataLoading = false;
+      })
+      .addCase(fetchCardAction.pending, (state) => {
+        state.isCardDataLoading = true;
+      })
+      .addCase(fetchCardAction.fulfilled, (state, action) => {
+        state.card = action.payload;
+        state.isCardsDataLoading = false;
       });
   }
 });

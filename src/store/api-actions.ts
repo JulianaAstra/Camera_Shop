@@ -34,15 +34,14 @@ export const fetchPromoCardsAction = createAsyncThunk<PromoCard[], undefined, Th
 //   },
 // );
 
-// export const fetchDetailedQuestAction = createAsyncThunk<DetailedQuest, {id: string}, ThunkObjType>(
-//   'data/fetchDetailedQuest', async ({id}, {dispatch, extra: api}) => {
-//     const url = id !== undefined ? `${APIRoute.Quests}/${id}` : '';
-//     const {data} = await
-//     api.get<DetailedQuest>(url);
-//     dispatch(fetchBookingInformationAction({id}));
-//     return data;
-//   },
-// );
+export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType>(
+  'data/fetchCard', async ({id}, {extra: api}) => {
+    const url = id !== undefined ? `${APIRoute.Cards}/${id}` : '';
+    const {data} = await
+    api.get<Card>(url);
+    return data;
+  },
+);
 
 // export const fetchBookedQuestsAction = createAsyncThunk<BookedQuest[], undefined, ThunkObjType>(
 //   'data/fetchBookedQuests', async (_arg, { extra: api}) => {

@@ -1,4 +1,7 @@
-function ModalAddItem(): JSX.Element {
+function ModalAddItem({handleCloseClick}): JSX.Element {
+
+  const closeClickHandler = () => handleCloseClick();
+
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
@@ -47,7 +50,7 @@ function ModalAddItem(): JSX.Element {
           Добавить в корзину
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={closeClickHandler}>
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />
             </svg>

@@ -6,11 +6,11 @@ export type AppData = {
   cards: Card[] | null;
   promoCards: PromoCard[] | null;
   isPromoCardsDataLoading: boolean;
-  // detailedQuest: DetailedQuest | null;
+  card: Card | null;
   // filteredQuests: Quest[] | null;
   // bookingInfo: Point[] | null;
   isCardsDataLoading: boolean;
-  // isDetailedQuestDataLoading: boolean;
+  isCardDataLoading: boolean;
   // isBookingInformationDataLoading: boolean;
   // activeFilterTheme: string;
   // activeFilterDifficulty: string;

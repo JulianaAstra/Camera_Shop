@@ -7,6 +7,10 @@ export const getCards = (state: State): Card[] | null => state[NameSpace.AppData
 
 export const getPromoCards = (state: State): PromoCard[] | null => state[NameSpace.AppData].promoCards;
 
+export const getCard = (state: State): Card | null => state[NameSpace.AppData].card;
+
 export const getCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardsDataLoading;
 
 export const getPromoCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isPromoCardsDataLoading;
+
+export const getCardDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardDataLoading;

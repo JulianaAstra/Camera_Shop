@@ -3,10 +3,13 @@ import RateStarsComponent from '../../rate-stars/rate-stars.tsx';
 
 type CardProps = {
   card: Card;
+  handleClick: (cardId: number) => void;
 }
 
-function CardComponent({card}: CardProps): JSX.Element {
-  const {name, previewImg, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
+function CardComponent({card, handleClick}: CardProps): JSX.Element {
+  const {id, name, previewImg, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
+
+  const clickHandler = (cardId) => handleClick(cardId);
 
   return (
     <div className="product-card">
@@ -36,6 +39,7 @@ function CardComponent({card}: CardProps): JSX.Element {
       </div>
       <div className="product-card__buttons">
         <button
+          onClick={() => clickHandler(id)}
           className="btn btn--purple product-card__btn"
           type="button"
         >

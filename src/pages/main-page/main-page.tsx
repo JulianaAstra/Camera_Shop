@@ -3,9 +3,9 @@ import { Card } from '../../types/card.ts';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
 import LoadingScreen from '../loading-screen/loading-screen.tsx';
-import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors.ts';
+import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus, getCardDataLoadingStatus, getCard } from '../../store/app-data/selectors.ts';
 import PaginationComponent from '../../components/pagination/pagination.tsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePagination } from '../../components/pagination/pagination-context.tsx';
 import { useParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner.tsx';
@@ -16,6 +16,7 @@ function MainPageComponent(): JSX.Element {
 
   const { setCurrentPage, currentPage } = usePagination();
   const { pageNumber }: { pageNumber?: string } = useParams();
+  const [cardId, setCardId] = useState(null);
 
   useEffect(() => {
     if (!pageNumber) {
@@ -30,11 +31,13 @@ function MainPageComponent(): JSX.Element {
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
   const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
+  const isCardLoading = useAppSelector(getCardDataLoadingStatus);
 
   const cards: Card[] | null = useAppSelector(getCards);
   const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
+  const card: Card | null = useAppSelector(getCard);
 
-  if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
+  if (isCardsLoading || isPromoCardsLoading || isCardLoading || cards === null || promoCards === null) {
     return (
       <LoadingScreen />
     );
@@ -45,6 +48,16 @@ function MainPageComponent(): JSX.Element {
   const endIndex = startIndex + itemsPerPage;
   const displayedCards = cards.slice(startIndex, endIndex);
   const pagesCount = Math.ceil(cards.length / itemsPerPage);
+
+  const buyBtnClickHandler = (cardId) => {
+    console.log(cardId);
+    console.log('hello!');
+    setCardId(cardId);
+  };
+
+  const crossBtnClickHandler = () => {
+    setCardId(null);
+  };
 
   return (
 
@@ -347,7 +360,7 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent cards={displayedCards} />
+                  <CardsListComponent handleBuyBtnClick={buyBtnClickHandler} cards={displayedCards} />
                   <PaginationComponent pagesCount={pagesCount}/>
                 </div>
               </div>
@@ -355,7 +368,7 @@ function MainPageComponent(): JSX.Element {
           </section>
         </div>
 
-        <ModalAddItem />
+        {cardId && <ModalAddItem handleCloseClick={crossBtnClickHandler}/> }
       </main>
       <footer className="footer">
         <div className="container">
