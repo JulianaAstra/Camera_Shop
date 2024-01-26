@@ -1,5 +1,40 @@
-function ModalAddItem({handleCloseClick}): JSX.Element {
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+// import { getCardDataLoadingStatus } from '../../store/app-data/selectors';
+// import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { getCard } from '../../store/app-data/selectors';
+import { fetchCardAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
+type ModalAddItemProps = {
+  cardIdValue: number;
+  handleCloseClick: () => void;
+}
+
+function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  // const isCardLoading = useAppSelector(getCardDataLoadingStatus);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted && cardIdValue !== null) {
+      dispatch(fetchCardAction({id: cardIdValue}));
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [cardIdValue, dispatch]);
+
+  const card = useAppSelector(getCard);
+  const {id, name, vendorCode,type, category, description, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
+
+
+  // if (isCardLoading) {
+  //   return (
+  //     <LoadingScreen />
+  //   );
+  // }
   const closeClickHandler = () => handleCloseClick();
 
   return (
@@ -16,26 +51,26 @@ function ModalAddItem({handleCloseClick}): JSX.Element {
                   srcSet="img/content/orlenok.webp, img/content/orlenok@2x.webp 2x"
                 />
                 <img
-                  src="img/content/orlenok.jpg"
-                  srcSet="img/content/orlenok@2x.jpg 2x"
+                  src={previewImg}
+                  srcSet={`${previewImg2x} 2x"`}
                   width={140}
                   height={120}
-                  alt="Фотоаппарат «Орлёнок»"
+                  alt={name}
                 />
               </picture>
             </div>
             <div className="basket-item__description">
-              <p className="basket-item__title">Орлёнок</p>
+              <p className="basket-item__title">{name}</p>
               <ul className="basket-item__list">
                 <li className="basket-item__list-item">
                   <span className="basket-item__article">Артикул:</span>{' '}
-                  <span className="basket-item__number">O78DFGSD832</span>
+                  <span className="basket-item__number">{vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">Плёночная фотокамера</li>
-                <li className="basket-item__list-item">Любительский уровень</li>
+                <li className="basket-item__list-item">{type} фотокамера</li>
+                <li className="basket-item__list-item">{level} уровень</li>
               </ul>
               <p className="basket-item__price">
-                <span className="visually-hidden">Цена:</span>18 970 ₽
+                <span className="visually-hidden">Цена:</span>{price} ₽
               </p>
             </div>
           </div>

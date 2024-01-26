@@ -3,7 +3,7 @@ import { Card } from '../../types/card.ts';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
 import LoadingScreen from '../loading-screen/loading-screen.tsx';
-import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus, getCardDataLoadingStatus, getCard } from '../../store/app-data/selectors.ts';
+import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus} from '../../store/app-data/selectors.ts';
 import PaginationComponent from '../../components/pagination/pagination.tsx';
 import { useEffect, useState } from 'react';
 import { usePagination } from '../../components/pagination/pagination-context.tsx';
@@ -31,13 +31,11 @@ function MainPageComponent(): JSX.Element {
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
   const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
-  const isCardLoading = useAppSelector(getCardDataLoadingStatus);
 
   const cards: Card[] | null = useAppSelector(getCards);
   const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
-  const card: Card | null = useAppSelector(getCard);
 
-  if (isCardsLoading || isPromoCardsLoading || isCardLoading || cards === null || promoCards === null) {
+  if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
       <LoadingScreen />
     );
@@ -49,10 +47,8 @@ function MainPageComponent(): JSX.Element {
   const displayedCards = cards.slice(startIndex, endIndex);
   const pagesCount = Math.ceil(cards.length / itemsPerPage);
 
-  const buyBtnClickHandler = (cardId) => {
-    console.log(cardId);
-    console.log('hello!');
-    setCardId(cardId);
+  const buyBtnClickHandler = (cardIdValue) => {
+    setCardId(cardIdValue);
   };
 
   const crossBtnClickHandler = () => {
@@ -368,7 +364,7 @@ function MainPageComponent(): JSX.Element {
           </section>
         </div>
 
-        {cardId && <ModalAddItem handleCloseClick={crossBtnClickHandler}/> }
+        {cardId && <ModalAddItem cardIdValue={cardId} handleCloseClick={crossBtnClickHandler}/> }
       </main>
       <footer className="footer">
         <div className="container">
