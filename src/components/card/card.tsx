@@ -1,5 +1,7 @@
 import { Card } from '../../types/card.ts';
 import RateStarsComponent from '../../rate-stars/rate-stars.tsx';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 type CardProps = {
   card: Card;
@@ -9,7 +11,7 @@ type CardProps = {
 function CardComponent({card, handleClick}: CardProps): JSX.Element {
   const {id, name, previewImg, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
 
-  const clickHandler = (cardId) => handleClick(cardId);
+  const clickHandler = (cardId: number) => handleClick(cardId);
 
   return (
     <div className="product-card">
@@ -45,9 +47,9 @@ function CardComponent({card, handleClick}: CardProps): JSX.Element {
         >
                       Купить
         </button>
-        <a className="btn btn--transparent" href="#">
+        <Link to={`${AppRoute.Product}/${id}`} className="btn btn--transparent">
                       Подробнее
-        </a>
+        </Link>
       </div>
     </div>
   );

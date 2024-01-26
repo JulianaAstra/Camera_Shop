@@ -1,6 +1,7 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Routes, Route } from 'react-router-dom';
 import MainPageComponent from '../../pages/main-page/main-page.tsx';
+import ProductPageComponent from '../../pages/product/product.tsx';
 import { AppRoute } from '../../const.ts';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
@@ -48,11 +49,11 @@ function App(): JSX.Element {
               path={`${AppRoute.Root}/:pageNumber`}
               element={<MainPageComponent />}
             />
-            {/* <Route
-          path={`${AppRoute.Product}/:id`}
-          element={<ProductPageComponent />}
-        />
-        <Route
+            <Route
+              path={`${AppRoute.Product}/:id`}
+              element={<ProductPageComponent />}
+            />
+            {/*<Route
           path={AppRoute.Basket}
           element={<BasketPageComponent />}
         />
