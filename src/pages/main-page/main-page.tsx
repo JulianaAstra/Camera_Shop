@@ -16,7 +16,7 @@ function MainPageComponent(): JSX.Element {
 
   const { setCurrentPage, currentPage } = usePagination();
   const { pageNumber }: { pageNumber?: string } = useParams();
-  const [cardId, setCardId] = useState(null);
+  const [cardId, setCardId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!pageNumber) {
@@ -47,8 +47,10 @@ function MainPageComponent(): JSX.Element {
   const displayedCards = cards.slice(startIndex, endIndex);
   const pagesCount = Math.ceil(cards.length / itemsPerPage);
 
-  const buyBtnClickHandler = (cardIdValue) => {
-    setCardId(cardIdValue);
+  const buyBtnClickHandler = (cardIdValue: number | null) => {
+    if (cardIdValue !== null) {
+      setCardId(cardIdValue);
+    }
   };
 
   const crossBtnClickHandler = () => {

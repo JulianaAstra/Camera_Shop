@@ -1,10 +1,11 @@
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 // import { getCardDataLoadingStatus } from '../../store/app-data/selectors';
-// import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { getCard } from '../../store/app-data/selectors';
 import { fetchCardAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { Card } from '../../types/card';
 
 type ModalAddItemProps = {
   cardIdValue: number;
@@ -26,15 +27,15 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.E
     };
   }, [cardIdValue, dispatch]);
 
-  const card = useAppSelector(getCard);
-  const {id, name, vendorCode,type, category, description, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
+  const card: Card | null = useAppSelector(getCard);
 
+  if (!card) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
-  // if (isCardLoading) {
-  //   return (
-  //     <LoadingScreen />
-  //   );
-  // }
+  const {name, vendorCode,type, previewImg, level, price, previewImg2x} = card;
   const closeClickHandler = () => handleCloseClick();
 
   return (
