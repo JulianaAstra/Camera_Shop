@@ -10,6 +10,7 @@ import { usePagination } from '../../components/pagination/pagination-context.ts
 import { useParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner.tsx';
 import { PromoCard } from '../../types/promo-card.ts';
+import ModalAddItem from '../../components/modal-add-item/modal-add-item.tsx';
 
 function MainPageComponent(): JSX.Element {
 
@@ -32,7 +33,6 @@ function MainPageComponent(): JSX.Element {
 
   const cards: Card[] | null = useAppSelector(getCards);
   const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
-  // console.log(promoCards);
 
   if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
@@ -354,6 +354,8 @@ function MainPageComponent(): JSX.Element {
             </div>
           </section>
         </div>
+
+        <ModalAddItem />
       </main>
       <footer className="footer">
         <div className="container">
