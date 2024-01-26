@@ -10,14 +10,14 @@ import RateStarsComponent from '../../rate-stars/rate-stars';
 
 function ProductPageComponent(): JSX.Element {
   const {id} = useParams();
-  const idNumber = parseInt(id, 10);
+  const idNumber = id ? parseInt(id, 10) : undefined;
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted && id !== null) {
-      dispatch(fetchCardAction({id: idNumber}));
+      dispatch(fetchCardAction({id: idNumber as number}));
     }
     return () => {
       isMounted = false;
