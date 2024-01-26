@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 // import { PromoCards } from '../../mocks/promo';
 import { SwiperOptions } from 'swiper/types';
-import { PromoCard } from '../../types/promo-card';
+import { PromoCard } from '../../types/promo-card.ts';
 
 import 'swiper/css';
 import 'swiper/css/pagination';

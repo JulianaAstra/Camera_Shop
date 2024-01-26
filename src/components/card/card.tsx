@@ -1,5 +1,5 @@
-import { Card } from '../../types/card';
-import RateStarsComponent from '../../rate-stars/rate-stars';
+import { Card } from '../../types/card.ts';
+import RateStarsComponent from '../../rate-stars/rate-stars.tsx';
 
 type CardProps = {
   card: Card;

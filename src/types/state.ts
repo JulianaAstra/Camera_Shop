@@ -1,6 +1,6 @@
-import { store } from '../store/index';
-import { Card } from './card';
-import { PromoCard } from './promo-card';
+import { store } from '../store/index.ts';
+import { Card } from './card.ts';
+import { PromoCard } from './promo-card.ts';
 
 export type AppData = {
   cards: Card[] | null;

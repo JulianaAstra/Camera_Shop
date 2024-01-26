@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
-import { AppData } from '../../types/state';
-import { fetchCardsAction, fetchPromoCardsAction } from '../api-actions';
+import { NameSpace } from '../../const.ts';
+import { AppData } from '../../types/state.ts';
+import { fetchCardsAction, fetchPromoCardsAction } from '../api-actions.ts';
 
 const initialState: AppData = {
   cards: [],

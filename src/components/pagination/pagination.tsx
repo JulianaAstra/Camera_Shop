@@ -1,6 +1,6 @@
-import { usePagination } from './pagination-context';
+import { usePagination } from './pagination-context.tsx';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../const.ts';
 
 type PaginationComponentProps = {
   pagesCount: number;

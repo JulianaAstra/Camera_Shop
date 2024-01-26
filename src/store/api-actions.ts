@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Card } from '../types/card';
-import { PromoCard } from '../types/promo-card';
+import { Card } from '../types/card.ts';
+import { PromoCard } from '../types/promo-card.ts';
 // import { redirectToRoute } from './action';
-import { APIRoute } from '../const';
+import { APIRoute } from '../const.ts';
 // import { AuthData } from '../types/auth-data';
 // import { UserData } from '../types/user-data';
-import { ThunkObjType } from '../types/thunk-object';
+import { ThunkObjType } from '../types/thunk-object.ts';
 // import { BookedQuestData } from '../types/booked-quest-data';
 // import { ReservedQuestData } from '../types/booked-quest-data';
 

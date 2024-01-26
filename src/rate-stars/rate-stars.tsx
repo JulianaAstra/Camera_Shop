@@ -1,4 +1,4 @@
-import { totalStars } from '../const';
+import { totalStars } from '../const.ts';
 
 type RateStarsProps = {
   rating: number;

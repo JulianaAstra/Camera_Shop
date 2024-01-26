@@ -1,15 +1,15 @@
-import CardsListComponent from '../../components/cards-list/cards-list';
-import { Card } from '../../types/card';
+import CardsListComponent from '../../components/cards-list/cards-list.tsx';
+import { Card } from '../../types/card.ts';
 import { Helmet } from 'react-helmet-async';
-import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import LoadingScreen from '../loading-screen/loading-screen';
-import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors';
-import PaginationComponent from '../../components/pagination/pagination';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
+import LoadingScreen from '../loading-screen/loading-screen.tsx';
+import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors.ts';
+import PaginationComponent from '../../components/pagination/pagination.tsx';
 import { useEffect } from 'react';
-import { usePagination } from '../../components/pagination/pagination-context';
+import { usePagination } from '../../components/pagination/pagination-context.tsx';
 import { useParams } from 'react-router-dom';
-import Banner from '../../components/banner/banner';
-import { PromoCard } from '../../types/promo-card';
+import Banner from '../../components/banner/banner.tsx';
+import { PromoCard } from '../../types/promo-card.ts';
 
 function MainPageComponent(): JSX.Element {
 

@@ -1,5 +1,5 @@
-import CardComponent from '../card/card';
-import { Card } from '../../types/card';
+import CardComponent from '../card/card.tsx';
+import { Card } from '../../types/card.ts';
 
 type CardsListProps = {
   cards: Card[];

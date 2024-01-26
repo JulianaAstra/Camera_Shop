@@ -1,16 +1,16 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Routes, Route } from 'react-router-dom';
-import MainPageComponent from '../../pages/main-page/main-page';
-import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
-import { getCardsDataLoadingStatus, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors';
-import { fetchCardsAction, fetchPromoCardsAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import MainPageComponent from '../../pages/main-page/main-page.tsx';
+import { AppRoute } from '../../const.ts';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
+import HistoryRouter from '../history-route/history-route.tsx';
+import browserHistory from '../../browser-history.ts';
+import { getCardsDataLoadingStatus, getPromoCardsDataLoadingStatus } from '../../store/app-data/selectors.ts';
+import { fetchCardsAction, fetchPromoCardsAction } from '../../store/api-actions.ts';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.ts';
 import { useEffect } from 'react';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { PaginationProvider } from '../pagination/pagination-context';
+import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
+import { PaginationProvider } from '../pagination/pagination-context.tsx';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();

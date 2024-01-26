@@ -1,7 +1,7 @@
-import { NameSpace } from '../../const';
-import { State } from '../../types/state';
-import { Card } from '../../types/card';
-import { PromoCard } from '../../types/promo-card';
+import { NameSpace } from '../../const.ts';
+import { State } from '../../types/state.ts';
+import { Card } from '../../types/card.ts';
+import { PromoCard } from '../../types/promo-card.ts';
 
 export const getCards = (state: State): Card[] | null => state[NameSpace.AppData].cards;
 
