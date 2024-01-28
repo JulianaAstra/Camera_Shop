@@ -22,24 +22,31 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
   const dispatch = useAppDispatch();
 
   const activeTabFromLocalStorage = localStorage.getItem('activeTab');
-  if (activeTabFromLocalStorage !== null) {
-    dispatch(setActiveTab(localStorage.getItem('activeTab')));
-  }
-
   const activeTab = useAppSelector(getActiveTab);
-  if (activeTab) {
-    localStorage.setItem('activeTab', activeTab);
-  }
 
-  // useEffect(() => {
-  //   setLocationUrl(`${AppRoute.Product}/${id}`);
-  // }, [id]);
+  // if (activeTabFromLocalStorage !== null) {
+  //   dispatch(setActiveTab(localStorage.getItem('activeTab')));
+  // }
+
+  // if (activeTab) {
+  //   localStorage.setItem('activeTab', activeTab);
+  // }
 
   useEffect(() => {
+    if (activeTabFromLocalStorage !== null) {
+      dispatch(setActiveTab(localStorage.getItem('activeTab')));
+    }
     if (activeTab) {
       localStorage.setItem('activeTab', activeTab);
     }
-  }, [activeTab, dispatch]);
+  }, [activeTab, activeTabFromLocalStorage, dispatch]);
+
+
+  // useEffect(() => {
+  //   if (activeTab) {
+  //     localStorage.setItem('activeTab', activeTab);
+  //   }
+  // }, [activeTab, dispatch]);
 
   const handleClick = (tabName: string | undefined) => {
     if (tabName) {
