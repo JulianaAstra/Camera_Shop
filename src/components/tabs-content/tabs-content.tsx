@@ -1,5 +1,5 @@
 import { AppRoute } from '../../const';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TabName } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
@@ -18,7 +18,7 @@ type TabsContentProps = {
 
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
 
-  const [locationUrl, setLocationUrl] = useState('');
+  // const [locationUrl, setLocationUrl] = useState('');
   const dispatch = useAppDispatch();
 
   const activeTabFromLocalStorage = localStorage.getItem('activeTab');
@@ -31,9 +31,9 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
     localStorage.setItem('activeTab', activeTab);
   }
 
-  useEffect(() => {
-    setLocationUrl(`${AppRoute.Product}/${id}`);
-  }, [id]);
+  // useEffect(() => {
+  //   setLocationUrl(`${AppRoute.Product}/${id}`);
+  // }, [id]);
 
   useEffect(() => {
     if (activeTab) {
@@ -55,7 +55,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
 
       <div className="tabs__controls product__tabs-controls">
 
-        <Link to={`${locationUrl}${AppRoute.Characteristics}`}>
+        <Link to={`${AppRoute.Product}/${id}${AppRoute.Characteristics}`}>
           <button type="button"
             onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
             className={`tabs__control ${activeTab === TabName.Characteristics ? 'is-active' : ''}`}
@@ -65,7 +65,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
           </button>
         </Link>
 
-        <Link to={`${locationUrl}${AppRoute.Description}`}>
+        <Link to={`${AppRoute.Product}/${id}${AppRoute.Description}`}>
           <button type="button"
             data-link={TabName.Description}
             onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
