@@ -7,6 +7,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { Card } from '../../types/card';
 import RateStarsComponent from '../../rate-stars/rate-stars';
+import TabsContentComponent from '../../components/tabs-content/tabs-content';
 
 function ProductPageComponent(): JSX.Element {
   const {id} = useParams();
@@ -33,6 +34,7 @@ function ProductPageComponent(): JSX.Element {
   }
 
   const {name, rating, reviewCount, category, description, vendorCode, type, previewImg, previewImgWebp, previewImgWebp2x, level, price, previewImg2x} = card;
+  const cardId = card.id;
 
   return (
     <div className="wrapper">
@@ -158,11 +160,11 @@ function ProductPageComponent(): JSX.Element {
                   <picture>
                     <source
                       type="image/webp"
-                      srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
+                      srcSet={`../../${previewImgWebp}, ../../${previewImgWebp2x}`}
                     />
                     <img
-                      src={previewImg}
-                      srcSet={`${previewImg2x} 2x`}
+                      src={`../../${previewImg}`}
+                      srcSet={`../../${previewImg2x} 2x`}
                       width={560}
                       height={480}
                       alt={name}
@@ -181,51 +183,16 @@ function ProductPageComponent(): JSX.Element {
                     </svg>
                 Добавить в корзину
                   </button>
-                  <div className="tabs product__tabs">
-                    <div className="tabs__controls product__tabs-controls">
-                      <button className="tabs__control" type="button">
-                    Характеристики
-                      </button>
-                      <button className="tabs__control is-active" type="button">
-                    Описание
-                      </button>
-                    </div>
-                    <div className="tabs__content">
-                      <div className="tabs__element">
-                        <ul className="product__tabs-list">
-                          <li className="item-list">
-                            <span className="item-list__title">Артикул:</span>
-                            <p className="item-list__text"> {vendorCode}</p>
-                          </li>
-                          <li className="item-list">
-                            <span className="item-list__title">Категория:</span>
-                            <p className="item-list__text">{category}</p>
-                          </li>
-                          <li className="item-list">
-                            <span className="item-list__title">Тип камеры:</span>
-                            <p className="item-list__text">{type}</p>
-                          </li>
-                          <li className="item-list">
-                            <span className="item-list__title">Уровень:</span>
-                            <p className="item-list__text">{level}</p>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="tabs__element is-active">
-                        <div className="product__tabs-text">
-                          <p>
-                            {description}
-                          </p>
-                          {/* <p>
-                        Вы&nbsp;тоже можете прикоснуться к&nbsp;волшебству
-                        аналоговой съёмки, заказав этот чудо-аппарат. Кто знает,
-                        может с&nbsp;Das Auge IV&nbsp;начнётся ваш путь
-                        к&nbsp;наградам всех престижных кинофестивалей.
-                          </p> */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
+                  <TabsContentComponent
+                    vendorCode={vendorCode}
+                    category={category}
+                    type={type}
+                    level={level}
+                    description={description}
+                    id={cardId}
+                  />
+
                 </div>
               </div>
             </section>
@@ -240,12 +207,12 @@ function ProductPageComponent(): JSX.Element {
                       <div className="product-card__img">
                         <picture>
                           <source
-                            type="image/webp"
-                            srcSet="img/content/fast-shot.webp, img/content/fast-shot@2x.webp 2x"
+                            type="../image/webp"
+                            srcSet="../img/content/fast-shot.webp, ../img/content/fast-shot@2x.webp 2x"
                           />
                           <img
-                            src="img/content/fast-shot.jpg"
-                            srcSet="img/content/fast-shot@2x.jpg 2x"
+                            src="../img/content/fast-shot.jpg"
+                            srcSet="../img/content/fast-shot@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Фотоаппарат FastShot MR-5"
@@ -295,12 +262,12 @@ function ProductPageComponent(): JSX.Element {
                       <div className="product-card__img">
                         <picture>
                           <source
-                            type="image/webp"
-                            srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+                            type="../image/webp"
+                            srcSet="../img/content/das-auge.webp, ../img/content/das-auge@2x.webp 2x"
                           />
                           <img
-                            src="img/content/das-auge.jpg"
-                            srcSet="img/content/das-auge@2x.jpg 2x"
+                            src="../img/content/das-auge.jpg"
+                            srcSet="../img/content/das-auge@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Ретрокамера «Das Auge IV»"
@@ -352,12 +319,12 @@ function ProductPageComponent(): JSX.Element {
                       <div className="product-card__img">
                         <picture>
                           <source
-                            type="image/webp"
-                            srcSet="img/content/instaprinter.webp, img/content/instaprinter@2x.webp 2x"
+                            type="../image/webp"
+                            srcSet="../img/content/instaprinter.webp, ../img/content/instaprinter@2x.webp 2x"
                           />
                           <img
-                            src="img/content/instaprinter.jpg"
-                            srcSet="img/content/instaprinter@2x.jpg 2x"
+                            src="../img/content/instaprinter.jpg"
+                            srcSet="../img/content/instaprinter@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Фотоаппарат Instaprinter P2"
@@ -408,12 +375,12 @@ function ProductPageComponent(): JSX.Element {
                       <div className="product-card__img">
                         <picture>
                           <source
-                            type="image/webp"
-                            srcSet="img/content/fast-shot.webp, img/content/fast-shot@2x.webp 2x"
+                            type="../image/webp"
+                            srcSet="../img/content/fast-shot.webp, ../img/content/fast-shot@2x.webp 2x"
                           />
                           <img
-                            src="img/content/fast-shot.jpg"
-                            srcSet="img/content/fast-shot@2x.jpg 2x"
+                            src="../img/content/fast-shot.jpg"
+                            srcSet="../img/content/fast-shot@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Фотоаппарат FastShot MR-5"
@@ -464,11 +431,11 @@ function ProductPageComponent(): JSX.Element {
                         <picture>
                           <source
                             type="image/webp"
-                            srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+                            srcSet="../img/content/das-auge.webp, ../img/content/das-auge@2x.webp 2x"
                           />
                           <img
-                            src="img/content/das-auge.jpg"
-                            srcSet="img/content/das-auge@2x.jpg 2x"
+                            src="../img/content/das-auge.jpg"
+                            srcSet="../img/content/das-auge@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Ретрокамера «Das Auge IV»"
@@ -521,11 +488,11 @@ function ProductPageComponent(): JSX.Element {
                         <picture>
                           <source
                             type="image/webp"
-                            srcSet="img/content/instaprinter.webp, img/content/instaprinter@2x.webp 2x"
+                            srcSet="../img/content/instaprinter.webp, ../img/content/instaprinter@2x.webp 2x"
                           />
                           <img
-                            src="img/content/instaprinter.jpg"
-                            srcSet="img/content/instaprinter@2x.jpg 2x"
+                            src="../img/content/instaprinter.jpg"
+                            srcSet="../img/content/instaprinter@2x.jpg 2x"
                             width={280}
                             height={240}
                             alt="Фотоаппарат Instaprinter P2"

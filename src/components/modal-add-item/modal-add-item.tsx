@@ -1,5 +1,4 @@
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-// import { getCardDataLoadingStatus } from '../../store/app-data/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { getCard } from '../../store/app-data/selectors';
@@ -14,8 +13,6 @@ type ModalAddItemProps = {
 
 function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  // const isCardLoading = useAppSelector(getCardDataLoadingStatus);
 
   useEffect(() => {
     let isMounted = true;

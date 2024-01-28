@@ -2,7 +2,9 @@ export enum AppRoute {
   Root = '/',
   Product = '/camera',
   Basket = '/basket',
-  Error = '/404'
+  Error = '/404',
+  Description = '/description',
+  Characteristics = '/characteristics'
 }
 
 export const NameSpace = {
