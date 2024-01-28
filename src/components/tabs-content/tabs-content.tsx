@@ -18,7 +18,6 @@ enum TabName {
 
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<string | undefined>(TabName.Description);
-
   const [locationUrl, setLocationUrl] = useState('');
 
   useEffect(() => {
