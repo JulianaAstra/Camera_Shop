@@ -15,4 +15,4 @@ export const getPromoCardsDataLoadingStatus = (state: State): boolean => state[N
 
 export const getCardDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardDataLoading;
 
-export const getActiveTab = (state: State): string => state[NameSpace.AppData].activeTab;
+export const getActiveTab = (state: State): string | null => state[NameSpace.AppData].activeTab;

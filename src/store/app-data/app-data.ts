@@ -27,7 +27,7 @@ export const appData = createSlice({
     setCardDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isCardDataLoading = action.payload;
     },
-    setActiveTab: (state, action: PayloadAction<string>) => {
+    setActiveTab: (state, action: PayloadAction<string | null>) => {
       state.activeTab = action.payload;
     },
   },
