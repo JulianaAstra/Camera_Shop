@@ -18,35 +18,23 @@ type TabsContentProps = {
 
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
 
-  // const [locationUrl, setLocationUrl] = useState('');
   const dispatch = useAppDispatch();
 
   const activeTabFromLocalStorage = localStorage.getItem('activeTab');
   const activeTab = useAppSelector(getActiveTab);
 
-  // if (activeTabFromLocalStorage !== null) {
-  //   dispatch(setActiveTab(localStorage.getItem('activeTab')));
-  // }
-
-  // if (activeTab) {
-  //   localStorage.setItem('activeTab', activeTab);
-  // }
-
   useEffect(() => {
     if (activeTabFromLocalStorage !== null) {
       dispatch(setActiveTab(localStorage.getItem('activeTab')));
     }
+  }, [activeTabFromLocalStorage, dispatch]);
+
+
+  useEffect(() => {
     if (activeTab) {
       localStorage.setItem('activeTab', activeTab);
     }
-  }, [activeTab, activeTabFromLocalStorage, dispatch]);
-
-
-  // useEffect(() => {
-  //   if (activeTab) {
-  //     localStorage.setItem('activeTab', activeTab);
-  //   }
-  // }, [activeTab, dispatch]);
+  }, [activeTab, dispatch]);
 
   const handleClick = (tabName: string | undefined) => {
     if (tabName) {
