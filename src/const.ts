@@ -19,3 +19,8 @@ export enum APIRoute {
 }
 
 export const totalStars = 5;
+
+export enum TabName {
+  Description = 'description',
+  Characteristics = 'characteristics'
+}

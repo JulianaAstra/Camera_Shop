@@ -7,6 +7,7 @@ export type AppData = {
   promoCards: PromoCard[] | null;
   isPromoCardsDataLoading: boolean;
   card: Card | null;
+  activeTab: string;
   // filteredQuests: Quest[] | null;
   // bookingInfo: Point[] | null;
   isCardsDataLoading: boolean;

@@ -1,6 +1,11 @@
 import { AppRoute } from '../../const';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { TabName } from '../../const';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { getActiveTab } from '../../store/app-data/selectors';
+import { setActiveTab } from '../../store/app-data/app-data';
 
 type TabsContentProps = {
   vendorCode: string;
@@ -11,21 +16,29 @@ type TabsContentProps = {
   id: number;
 }
 
-enum TabName {
-  Description = 'description',
-  Characteristics = 'characteristics'
-}
-
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
-  const [activeTab, setActiveTab] = useState<string | undefined>(TabName.Description);
+
   const [locationUrl, setLocationUrl] = useState('');
+  const dispatch = useAppDispatch();
+
+  if (localStorage.getItem('activeTab')) {
+    dispatch(setActiveTab(localStorage.getItem('activeTab')));
+  }
+
+  const activeTab = useAppSelector(getActiveTab);
+  localStorage.setItem('activeTab', activeTab);
 
   useEffect(() => {
     setLocationUrl(`${AppRoute.Product}/${id}`);
   }, [id]);
 
+  useEffect(() => {
+    localStorage.setItem('activeTab', activeTab);
+  }, [activeTab, dispatch]);
+
   const handleClick = (tabName: string | undefined) => {
-    setActiveTab(tabName);
+    dispatch(setActiveTab(tabName));
+    localStorage.setItem('activeTab', tabName);
   };
 
   return (

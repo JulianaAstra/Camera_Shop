@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const.ts';
 import { AppData } from '../../types/state.ts';
 import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction } from '../api-actions.ts';
+import { TabName } from '../../const.ts';
 
 const initialState: AppData = {
   cards: [],
@@ -10,6 +11,7 @@ const initialState: AppData = {
   isPromoCardsDataLoading: false,
   isCardsDataLoading: false,
   isCardDataLoading: false,
+  activeTab: TabName.Description
 };
 
 export const appData = createSlice({
@@ -24,6 +26,9 @@ export const appData = createSlice({
     },
     setCardDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isCardDataLoading = action.payload;
+    },
+    setActiveTab: (state, action: PayloadAction<string>) => {
+      state.activeTab = action.payload;
     },
   },
   extraReducers(builder) {
@@ -51,3 +56,5 @@ export const appData = createSlice({
       });
   }
 });
+
+export const {setActiveTab} = appData.actions;
