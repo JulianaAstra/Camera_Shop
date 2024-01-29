@@ -4,30 +4,30 @@ import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector.ts';
 import LoadingScreen from '../loading-screen/loading-screen.tsx';
 import { getCardsDataLoadingStatus, getCards, getPromoCards, getPromoCardsDataLoadingStatus} from '../../store/app-data/selectors.ts';
-// import PaginationComponent from '../../components/pagination/pagination.tsx';
-import { useState } from 'react';
-// import { usePagination } from '../../components/pagination/pagination-context.tsx';
-// import { useParams } from 'react-router-dom';
+import PaginationComponent from '../../components/pagination/pagination.tsx';
+import { useState, useEffect } from 'react';
+import { usePagination } from '../../components/pagination/pagination-context.tsx';
+import { useParams } from 'react-router-dom';
 import Banner from '../../components/banner/banner.tsx';
 import { PromoCard } from '../../types/promo-card.ts';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item.tsx';
 
 function MainPageComponent(): JSX.Element {
 
-  // const { setCurrentPage, currentPage } = usePagination();
-  // const { pageNumber }: { pageNumber?: string } = useParams();
+  const { setCurrentPage, currentPage } = usePagination();
+  const { pageNumber }: { pageNumber?: string } = useParams();
   const [cardId, setCardId] = useState<number | null>(null);
 
-  // useEffect(() => {
-  //   if (!pageNumber) {
-  //     setCurrentPage(1);
-  //     return;
-  //   }
-  //   const pageNumberAsNumber = parseInt(pageNumber, 10);
-  //   if (!isNaN(pageNumberAsNumber)) {
-  //     setCurrentPage(pageNumberAsNumber);
-  //   }
-  // }, [setCurrentPage, pageNumber]);
+  useEffect(() => {
+    if (!pageNumber) {
+      setCurrentPage(1);
+      return;
+    }
+    const pageNumberAsNumber = parseInt(pageNumber, 10);
+    if (!isNaN(pageNumberAsNumber)) {
+      setCurrentPage(pageNumberAsNumber);
+    }
+  }, [setCurrentPage, pageNumber]);
 
   const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
   const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
@@ -41,11 +41,11 @@ function MainPageComponent(): JSX.Element {
     );
   }
 
-  // const itemsPerPage = 9;
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const displayedCards = cards.slice(startIndex, endIndex);
-  // const pagesCount = Math.ceil(cards.length / itemsPerPage);
+  const itemsPerPage = 9;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedCards = cards.slice(startIndex, endIndex);
+  const pagesCount = Math.ceil(cards.length / itemsPerPage);
 
   const buyBtnClickHandler = (cardIdValue: number | null) => {
     if (cardIdValue !== null) {
@@ -358,8 +358,8 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent handleBuyBtnClick={buyBtnClickHandler} cards={cards} />
-                  {/* <PaginationComponent pagesCount={pagesCount}/> */}
+                  <CardsListComponent handleBuyBtnClick={buyBtnClickHandler} cards={displayedCards} />
+                  <PaginationComponent pagesCount={pagesCount}/>
                 </div>
               </div>
             </div>
