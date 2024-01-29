@@ -70,7 +70,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
           <button type="button"
             data-link={TabName.Description}
             // onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
-            className={`tabs__control ${tab === TabName.Description ? 'is-active' : ''}`}
+            className={`tabs__control ${!tab || tab === TabName.Description ? 'is-active' : ''}`}
           >
                     Описание
           </button>
@@ -105,7 +105,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
         </div>
         <div
           data-tab={TabName.Description}
-          className={`tabs__element ${tab === TabName.Description ? 'is-active' : ''}`}
+          className={`tabs__element ${!tab || tab === TabName.Description ? 'is-active' : ''}`}
         >
           <div className="product__tabs-text">
             <p>
