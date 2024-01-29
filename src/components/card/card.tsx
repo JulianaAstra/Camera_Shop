@@ -6,6 +6,7 @@ import { AppRoute } from '../../const.ts';
 type CardProps = {
   card: Card;
   handleClick: (cardId: number) => void;
+  activeClass: string;
 }
 
 

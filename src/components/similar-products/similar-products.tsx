@@ -4,8 +4,11 @@ import { getSimilarCards } from '../../store/app-data/selectors';
 import { Card } from '../../types/card';
 import CardComponent from '../card/card';
 
-
-function SimilarProductsComponent(clickHandler): JSX.Element {
+type SimilarProductsProps = {
+  handleBuyClick: (cardIdValue: number | null) => void;
+}
+;
+function SimilarProductsComponent({handleBuyClick}: SimilarProductsProps): JSX.Element {
   const similarCards: Card[] | null = useAppSelector(getSimilarCards);
 
   return (
@@ -17,7 +20,7 @@ function SimilarProductsComponent(clickHandler): JSX.Element {
 
             <div className="product-similar__slider-list">
               {similarCards !== null ? similarCards.map((card) => (
-                <CardComponent activeClass={'is-active'} handleClick={clickHandler} key={card.id} card={card}/>
+                <CardComponent activeClass={'is-active'} handleClick={handleBuyClick} key={card.id} card={card}/>
 
               )) : ''}
             </div>

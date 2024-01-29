@@ -10,6 +10,7 @@ import RateStarsComponent from '../../rate-stars/rate-stars';
 import TabsContentComponent from '../../components/tabs-content/tabs-content';
 import Page404 from '../page404/404-page';
 import SimilarProductsComponent from '../../components/similar-products/similar-products';
+import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 
 function ProductPageComponent(): JSX.Element {
   const [similarCardId, setSimilarCardId] = useState<number | null>(null);
@@ -55,6 +56,10 @@ function ProductPageComponent(): JSX.Element {
     if (cardIdValue !== null) {
       setSimilarCardId(cardIdValue);
     }
+  };
+
+  const crossBtnClickHandler = () => {
+    setSimilarCardId(null);
   };
 
   return (
@@ -218,7 +223,7 @@ function ProductPageComponent(): JSX.Element {
               </div>
             </section>
           </div>
-          <SimilarProductsComponent clickHandler={buyBtnClickHandler}/>
+          <SimilarProductsComponent handleBuyClick={buyBtnClickHandler}/>
           <div className="page-content__section">
             <section className="review-block">
               <div className="container">
@@ -381,6 +386,7 @@ function ProductPageComponent(): JSX.Element {
               </div>
             </section>
           </div>
+          {similarCardId && <ModalAddItem cardIdValue={similarCardId} handleCloseClick={crossBtnClickHandler}/> }
         </div>
       </main>
       <a className="up-btn" href="#header">
