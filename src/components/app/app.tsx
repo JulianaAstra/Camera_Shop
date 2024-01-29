@@ -54,13 +54,13 @@ function App(): JSX.Element {
               element={<ProductPageComponent />}
             />
             <Route
-              path={`${AppRoute.Product}/:id${AppRoute.Description}`}
+              path={`${AppRoute.Product}/:id/:tab`}
               element={<ProductPageComponent />}
             />
-            <Route
-              path={`${AppRoute.Product}/:id${AppRoute.Characteristics}`}
+            {/* <Route
+              path={`${AppRoute.Product}/:id/:tab`}
               element={<ProductPageComponent />}
-            />
+            /> */}
             {/*<Route
           path={AppRoute.Basket}
           element={<BasketPageComponent />}
