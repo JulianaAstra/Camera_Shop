@@ -2,31 +2,42 @@ import { useParams } from 'react-router-dom';
 import { fetchCardAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getCard } from '../../store/app-data/selectors';
+import { getCard, getCards } from '../../store/app-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { Card } from '../../types/card';
 import RateStarsComponent from '../../rate-stars/rate-stars';
 import TabsContentComponent from '../../components/tabs-content/tabs-content';
-// import Page404 from '../page404/404-page';
+import Page404 from '../page404/404-page';
 
 function ProductPageComponent(): JSX.Element {
   const {id} = useParams();
-  const idNumber = id ? parseInt(id, 10) : undefined;
-
+  const idNumber = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : undefined;
   const dispatch = useAppDispatch();
+  const cards = useAppSelector(getCards);
+  const isIdExists = cards?.some((card) => card.id === idNumber);
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted && id !== null) {
+      if (!isIdExists) {
+        return;
+      }
       dispatch(fetchCardAction({id: idNumber as number}));
     }
+
     return () => {
       isMounted = false;
     };
-  }, [dispatch, id, idNumber]);
+  }, [dispatch, id, idNumber, isIdExists]);
 
   const card: Card | null = useAppSelector(getCard);
+
+  if (!isIdExists) {
+    return (
+      <Page404 />
+    );
+  }
 
   if (!card) {
     return (
@@ -36,6 +47,7 @@ function ProductPageComponent(): JSX.Element {
 
   const {name, rating, reviewCount, category, description, vendorCode, type, previewImg, previewImgWebp, previewImgWebp2x, level, price, previewImg2x} = card;
   const cardId = card.id;
+
 
   return (
     <div className="wrapper">

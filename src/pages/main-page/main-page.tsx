@@ -18,7 +18,17 @@ function MainPageComponent(): JSX.Element {
   const { pageNumber }: { pageNumber?: string } = useParams();
   const [cardId, setCardId] = useState<number | null>(null);
 
+  const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
+  const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
+
+  const cards: Card[] | null = useAppSelector(getCards);
+  const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
+
+  const itemsPerPage = 9;
+  const pagesCount = cards !== null ? Math.ceil(cards.length / itemsPerPage) : 0;
+
   useEffect(() => {
+
     if (!pageNumber) {
       setCurrentPage(1);
       return;
@@ -29,23 +39,15 @@ function MainPageComponent(): JSX.Element {
     }
   }, [setCurrentPage, pageNumber]);
 
-  const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
-  const isPromoCardsLoading = useAppSelector(getPromoCardsDataLoadingStatus);
-
-  const cards: Card[] | null = useAppSelector(getCards);
-  const promoCards: PromoCard[] | null = useAppSelector(getPromoCards);
-
   if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
       <LoadingScreen />
     );
   }
 
-  const itemsPerPage = 9;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedCards = cards.slice(startIndex, endIndex);
-  const pagesCount = Math.ceil(cards.length / itemsPerPage);
 
   const buyBtnClickHandler = (cardIdValue: number | null) => {
     if (cardIdValue !== null) {

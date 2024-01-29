@@ -1,4 +1,3 @@
-// PaginationContext.js
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 export type PaginationContextType = {
