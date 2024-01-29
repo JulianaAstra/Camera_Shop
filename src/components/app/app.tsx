@@ -11,7 +11,7 @@ import { fetchCardsAction, fetchPromoCardsAction } from '../../store/api-actions
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.ts';
 import { useEffect } from 'react';
 import LoadingScreen from '../../pages/loading-screen/loading-screen.tsx';
-import { PaginationProvider } from '../pagination/pagination-context.tsx';
+// import { PaginationProvider } from '../pagination/pagination-context.tsx';
 import Page404 from '../../pages/page404/404-page.tsx';
 
 function App(): JSX.Element {
@@ -40,30 +40,30 @@ function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter >
-        <PaginationProvider>
-          <Routes>
-            <Route
-              path={`${AppRoute.Root}`}
-              element={<MainPageComponent />}
-            />
-            <Route
-              path={`${AppRoute.Root}/:pageNumber`}
-              element={<MainPageComponent />}
-            />
-            <Route
-              path={`${AppRoute.Product}/:id`}
-              element={<ProductPageComponent />}
-            />
-            <Route
-              path={`${AppRoute.Product}/:id/:tab`}
-              element={<ProductPageComponent />}
-            />
-            <Route
-              path='*'
-              element={<Page404 />}
-            />
-          </Routes>
-        </PaginationProvider>
+        {/* <PaginationProvider> */}
+        <Routes>
+          <Route
+            path={`${AppRoute.Root}`}
+            element={<MainPageComponent />}
+          />
+          <Route
+            path={`${AppRoute.Root}:pageNumber`}
+            element={<MainPageComponent />}
+          />
+          <Route
+            path={`${AppRoute.Product}/:id`}
+            element={<ProductPageComponent />}
+          />
+          <Route
+            path={`${AppRoute.Product}/:id/:tab`}
+            element={<ProductPageComponent />}
+          />
+          <Route
+            path='*'
+            element={<Page404 />}
+          />
+        </Routes>
+        {/* </PaginationProvider> */}
       </BrowserRouter>
     </HelmetProvider>
   );
