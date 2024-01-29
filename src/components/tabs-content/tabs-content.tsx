@@ -1,5 +1,5 @@
 import { AppRoute } from '../../const';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TabName } from '../../const';
 // import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
@@ -38,9 +38,9 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
   //   }
   // }, [activeTab, dispatch]);
 
-  useEffect(() => {
-    console.log(tab);
-  }, [tab]);
+  // useEffect(() => {
+  //   console.log(tab);
+  // }, [tab]);
 
   // const handleClick = (tabName: string | undefined) => {
   //   if (tabName) {

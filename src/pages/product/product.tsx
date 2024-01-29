@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Card } from '../../types/card';
 import RateStarsComponent from '../../rate-stars/rate-stars';
 import TabsContentComponent from '../../components/tabs-content/tabs-content';
+// import Page404 from '../page404/404-page';
 
 function ProductPageComponent(): JSX.Element {
   const {id} = useParams();
