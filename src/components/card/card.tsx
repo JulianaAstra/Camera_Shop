@@ -8,22 +8,29 @@ type CardProps = {
   handleClick: (cardId: number) => void;
 }
 
-function CardComponent({card, handleClick}: CardProps): JSX.Element {
+
+function CardComponent({card, handleClick, activeClass}: CardProps): JSX.Element {
   const {id, name, previewImg, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
+
+  const imageUrl = {
+    previewImgSrcSet: `../${previewImgWebp}, ${previewImgWebp2x}`,
+    previewImg2x: `../${previewImg2x} 2x`,
+    previewImg: `../${previewImg}`,
+  }
 
   const clickHandler = (cardId: number) => handleClick(cardId);
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${activeClass}`}>
       <div className="product-card__img">
         <picture>
           <source
             type="image/webp"
-            srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}
+            srcSet={activeClass.length < 1 ? previewImg : imageUrl.previewImg}
           />
           <img
-            src={previewImg}
-            srcSet={`${previewImg2x} 2x`}
+            src={activeClass.length < 1 ? previewImg : imageUrl.previewImg}
+            srcSet={activeClass.length < 1 ? `${previewImg2x} 2x` : imageUrl.previewImg2x }
             width={280}
             height={240}
             alt={name}

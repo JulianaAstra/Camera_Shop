@@ -10,7 +10,7 @@ function CardsListComponent({cards, handleBuyBtnClick}: CardsListProps): JSX.Ele
 
   return (
     <div className="cards catalog__cards">
-      {cards.map((card) => <CardComponent key={card.id} card={card} handleClick={handleBuyBtnClick}/>)}
+      {cards.map((card) => <CardComponent key={card.id} card={card} handleClick={handleBuyBtnClick} activeClass={''}/>)}
     </div>
   );
 }

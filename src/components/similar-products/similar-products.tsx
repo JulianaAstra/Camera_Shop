@@ -17,7 +17,7 @@ function SimilarProductsComponent(clickHandler): JSX.Element {
 
             <div className="product-similar__slider-list">
               {similarCards !== null ? similarCards.map((card) => (
-                <CardComponent handleClick={clickHandler} key={card.id} card={card}/>
+                <CardComponent activeClass={'is-active'} handleClick={clickHandler} key={card.id} card={card}/>
                 // <div key={id} className="product-card is-active">
                 //   <div className="product-card__img">
                 //     <picture>
