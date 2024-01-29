@@ -13,6 +13,7 @@ import SimilarProductsComponent from '../../components/similar-products/similar-
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 
 function ProductPageComponent(): JSX.Element {
+
   const [similarCardId, setSimilarCardId] = useState<number | null>(null);
   const {id} = useParams();
   const idNumber = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : undefined;
@@ -26,6 +27,7 @@ function ProductPageComponent(): JSX.Element {
       if (!isIdExists) {
         return;
       }
+
       dispatch(fetchCardAction({id: idNumber as number}));
       dispatch(fetchSimilarCardsAction({id: idNumber as number}));
     }

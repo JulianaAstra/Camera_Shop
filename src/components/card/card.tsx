@@ -27,11 +27,11 @@ function CardComponent({card, handleClick, activeClass}: CardProps): JSX.Element
         <picture>
           <source
             type="image/webp"
-            srcSet={activeClass.length < 1 ? previewImg : imageUrl.previewImg}
+            srcSet={imageUrl.previewImg}
           />
           <img
-            src={activeClass.length < 1 ? previewImg : imageUrl.previewImg}
-            srcSet={activeClass.length < 1 ? `${previewImg2x} 2x` : imageUrl.previewImg2x }
+            src={imageUrl.previewImg}
+            srcSet={imageUrl.previewImg2x }
             width={280}
             height={240}
             alt={name}

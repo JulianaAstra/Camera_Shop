@@ -32,8 +32,15 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.E
     );
   }
 
-  const {name, vendorCode,type, previewImg, level, price, previewImg2x} = card;
+  const {name, vendorCode,type, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
   const closeClickHandler = () => handleCloseClick();
+
+  const imageUrl = {
+    previewImgSrcSet: `../${previewImgWebp}, ${previewImgWebp2x}`,
+    previewImg2x: `../${previewImg2x} 2x`,
+    previewImg: `../${previewImg}`,
+  };
+
 
   return (
     <div className="modal is-active">
@@ -46,11 +53,11 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.E
               <picture>
                 <source
                   type="image/webp"
-                  srcSet="img/content/orlenok.webp, img/content/orlenok@2x.webp 2x"
+                  srcSet={imageUrl.previewImgSrcSet}
                 />
                 <img
-                  src={previewImg}
-                  srcSet={`${previewImg2x} 2x"`}
+                  src={imageUrl.previewImg}
+                  srcSet={imageUrl.previewImg2x}
                   width={140}
                   height={120}
                   alt={name}
