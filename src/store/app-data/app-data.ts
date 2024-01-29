@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const.ts';
 import { AppData } from '../../types/state.ts';
-import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction } from '../api-actions.ts';
+import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction, fetchSimilarCardsAction } from '../api-actions.ts';
 import { TabName } from '../../const.ts';
 
 const initialState: AppData = {
   cards: [],
   card: null,
   promoCards: [],
+  similarCards: [],
   isPromoCardsDataLoading: false,
   isCardsDataLoading: false,
   isCardDataLoading: false,
-  activeTab: TabName.Description
+  activeTab: TabName.Description,
+  isSimilarCardsDataLoading: false,
 };
 
 export const appData = createSlice({
@@ -53,6 +55,13 @@ export const appData = createSlice({
       .addCase(fetchCardAction.fulfilled, (state, action) => {
         state.card = action.payload;
         state.isCardsDataLoading = false;
+      })
+      .addCase(fetchSimilarCardsAction.pending, (state) => {
+        state.isSimilarCardsDataLoading = true;
+      })
+      .addCase(fetchSimilarCardsAction.fulfilled, (state, action) => {
+        state.similarCards = action.payload;
+        state.isSimilarCardsDataLoading = false;
       });
   }
 });

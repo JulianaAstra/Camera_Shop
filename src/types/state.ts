@@ -8,10 +8,12 @@ export type AppData = {
   isPromoCardsDataLoading: boolean;
   card: Card | null;
   activeTab: string | null;
+  similarCards: Card[] | null;
   // filteredQuests: Quest[] | null;
   // bookingInfo: Point[] | null;
   isCardsDataLoading: boolean;
   isCardDataLoading: boolean;
+  isSimilarCardsDataLoading: boolean;
   // isBookingInformationDataLoading: boolean;
   // activeFilterTheme: string;
   // activeFilterDifficulty: string;

@@ -43,6 +43,15 @@ export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType
   },
 );
 
+export const fetchSimilarCardsAction = createAsyncThunk<Card[], {id: number}, ThunkObjType>(
+  'data/fetchSimilarCards', async ({id}, {extra: api}) => {
+    const url = id !== undefined ? `${APIRoute.Cards}/${id}${APIRoute.Similar}` : '';
+    const {data} = await
+    api.get<Card[]>(url);
+    return data;
+  },
+);
+
 // export const fetchBookedQuestsAction = createAsyncThunk<BookedQuest[], undefined, ThunkObjType>(
 //   'data/fetchBookedQuests', async (_arg, { extra: api}) => {
 //     const {data} = await

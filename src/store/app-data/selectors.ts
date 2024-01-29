@@ -9,6 +9,8 @@ export const getPromoCards = (state: State): PromoCard[] | null => state[NameSpa
 
 export const getCard = (state: State): Card | null => state[NameSpace.AppData].card;
 
+export const getSimilarCards = (state: State): Card[] | null => state[NameSpace.AppData].similarCards;
+
 export const getCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardsDataLoading;
 
 export const getPromoCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isPromoCardsDataLoading;
@@ -16,3 +18,5 @@ export const getPromoCardsDataLoadingStatus = (state: State): boolean => state[N
 export const getCardDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardDataLoading;
 
 export const getActiveTab = (state: State): string | null => state[NameSpace.AppData].activeTab;
+
+export const getSimilarCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isSimilarCardsDataLoading;
