@@ -1,11 +1,6 @@
 import { AppRoute } from '../../const';
-// import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TabName } from '../../const';
-// import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
-// import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-// import { getActiveTab } from '../../store/app-data/selectors';
-// import { setActiveTab } from '../../store/app-data/app-data';
 import { useParams } from 'react-router-dom';
 
 type TabsContentProps = {
@@ -20,35 +15,6 @@ type TabsContentProps = {
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
   const {tab} = useParams();
 
-  // const dispatch = useAppDispatch();
-
-  // const activeTabFromLocalStorage = localStorage.getItem('activeTab');
-  // const activeTab = useAppSelector(getActiveTab);
-
-  // useEffect(() => {
-  //   if (activeTabFromLocalStorage !== null) {
-  //     dispatch(setActiveTab(localStorage.getItem('activeTab')));
-  //   }
-  // }, [activeTabFromLocalStorage, dispatch]);
-
-
-  // useEffect(() => {
-  //   if (activeTab) {
-  //     localStorage.setItem('activeTab', activeTab);
-  //   }
-  // }, [activeTab, dispatch]);
-
-  // useEffect(() => {
-  //   console.log(tab);
-  // }, [tab]);
-
-  // const handleClick = (tabName: string | undefined) => {
-  //   if (tabName) {
-  //     dispatch(setActiveTab(tabName));
-  //     localStorage.setItem('activeTab', tabName);
-  //   }
-  // };
-
   return (
 
 
@@ -58,7 +24,6 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
 
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Characteristics}`}>
           <button type="button"
-            // onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
             className={`tabs__control ${tab === TabName.Characteristics ? 'is-active' : ''}`}
             data-link={TabName.Characteristics}
           >
@@ -69,7 +34,6 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Description}`}>
           <button type="button"
             data-link={TabName.Description}
-            // onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
             className={`tabs__control ${!tab || tab === TabName.Description ? 'is-active' : ''}`}
           >
                     Описание
