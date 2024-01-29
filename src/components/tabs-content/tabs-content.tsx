@@ -75,12 +75,6 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
             <p>
               {description}
             </p>
-            {/* <p>
-                        Вы&nbsp;тоже можете прикоснуться к&nbsp;волшебству
-                        аналоговой съёмки, заказав этот чудо-аппарат. Кто знает,
-                        может с&nbsp;Das Auge IV&nbsp;начнётся ваш путь
-                        к&nbsp;наградам всех престижных кинофестивалей.
-                          </p> */}
           </div>
         </div>
       </div>
