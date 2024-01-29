@@ -9,8 +9,6 @@ export type AppData = {
   card: Card | null;
   activeTab: string | null;
   similarCards: Card[] | null;
-  // filteredQuests: Quest[] | null;
-  // bookingInfo: Point[] | null;
   isCardsDataLoading: boolean;
   isCardDataLoading: boolean;
   isSimilarCardsDataLoading: boolean;
