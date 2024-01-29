@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TabName } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
-import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getActiveTab } from '../../store/app-data/selectors';
-import { setActiveTab } from '../../store/app-data/app-data';
+// import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+// import { getActiveTab } from '../../store/app-data/selectors';
+// import { setActiveTab } from '../../store/app-data/app-data';
+import { useParams } from 'react-router-dom';
 
 type TabsContentProps = {
   vendorCode: string;
@@ -17,31 +18,36 @@ type TabsContentProps = {
 }
 
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
+  const {tab} = useParams();
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  const activeTabFromLocalStorage = localStorage.getItem('activeTab');
-  const activeTab = useAppSelector(getActiveTab);
+  // const activeTabFromLocalStorage = localStorage.getItem('activeTab');
+  // const activeTab = useAppSelector(getActiveTab);
+
+  // useEffect(() => {
+  //   if (activeTabFromLocalStorage !== null) {
+  //     dispatch(setActiveTab(localStorage.getItem('activeTab')));
+  //   }
+  // }, [activeTabFromLocalStorage, dispatch]);
+
+
+  // useEffect(() => {
+  //   if (activeTab) {
+  //     localStorage.setItem('activeTab', activeTab);
+  //   }
+  // }, [activeTab, dispatch]);
 
   useEffect(() => {
-    if (activeTabFromLocalStorage !== null) {
-      dispatch(setActiveTab(localStorage.getItem('activeTab')));
-    }
-  }, [activeTabFromLocalStorage, dispatch]);
+    console.log(tab);
+  }, [tab]);
 
-
-  useEffect(() => {
-    if (activeTab) {
-      localStorage.setItem('activeTab', activeTab);
-    }
-  }, [activeTab, dispatch]);
-
-  const handleClick = (tabName: string | undefined) => {
-    if (tabName) {
-      dispatch(setActiveTab(tabName));
-      localStorage.setItem('activeTab', tabName);
-    }
-  };
+  // const handleClick = (tabName: string | undefined) => {
+  //   if (tabName) {
+  //     dispatch(setActiveTab(tabName));
+  //     localStorage.setItem('activeTab', tabName);
+  //   }
+  // };
 
   return (
 
@@ -52,8 +58,8 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
 
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Characteristics}`}>
           <button type="button"
-            onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
-            className={`tabs__control ${activeTab === TabName.Characteristics ? 'is-active' : ''}`}
+            // onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
+            className={`tabs__control ${tab === TabName.Characteristics ? 'is-active' : ''}`}
             data-link={TabName.Characteristics}
           >
                     Характеристики
@@ -63,8 +69,8 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Description}`}>
           <button type="button"
             data-link={TabName.Description}
-            onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
-            className={`tabs__control ${activeTab === TabName.Description ? 'is-active' : ''}`}
+            // onClick={(evt) => handleClick(evt.currentTarget.dataset.link)}
+            className={`tabs__control ${tab === TabName.Description ? 'is-active' : ''}`}
           >
                     Описание
           </button>
@@ -76,7 +82,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
       <div className="tabs__content">
         <div
           data-tab={TabName.Characteristics}
-          className={`tabs__element ${activeTab === TabName.Characteristics ? 'is-active' : ''}`}
+          className={`tabs__element ${tab === TabName.Characteristics ? 'is-active' : ''}`}
         >
           <ul className="product__tabs-list">
             <li className="item-list">
@@ -99,7 +105,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
         </div>
         <div
           data-tab={TabName.Description}
-          className={`tabs__element ${activeTab === TabName.Description ? 'is-active' : ''}`}
+          className={`tabs__element ${tab === TabName.Description ? 'is-active' : ''}`}
         >
           <div className="product__tabs-text">
             <p>
