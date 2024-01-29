@@ -58,7 +58,6 @@ function App(): JSX.Element {
               path={`${AppRoute.Product}/:id/:tab`}
               element={<ProductPageComponent />}
             />
-
             <Route
               path='*'
               element={<Page404 />}
