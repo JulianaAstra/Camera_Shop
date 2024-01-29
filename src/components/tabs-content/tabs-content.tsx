@@ -2,7 +2,7 @@ import { AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TabName } from '../../const';
-import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+// import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 // import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 // import { getActiveTab } from '../../store/app-data/selectors';
 // import { setActiveTab } from '../../store/app-data/app-data';
