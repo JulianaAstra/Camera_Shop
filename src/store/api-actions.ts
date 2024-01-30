@@ -22,15 +22,6 @@ export const fetchPromoCardsAction = createAsyncThunk<PromoCard[], undefined, Th
   },
 );
 
-export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType>(
-  'data/fetchCard', async ({id}, {extra: api}) => {
-    const url = id !== undefined ? `${APIRoute.Cards}/${id}` : '';
-    const {data} = await
-    api.get<Card>(url);
-    return data;
-  },
-);
-
 export const fetchSimilarCardsAction = createAsyncThunk<Card[], {id: number}, ThunkObjType>(
   'data/fetchSimilarCards', async ({id}, {extra: api}) => {
     const url = id !== undefined ? `${APIRoute.Cards}/${id}${APIRoute.Similar}` : '';
@@ -45,6 +36,16 @@ export const fetchCardReviewsAction = createAsyncThunk<Review[], {id: number}, T
     const url = id !== undefined ? `${APIRoute.Cards}/${id}${APIRoute.Reviews}` : '';
     const {data} = await
     api.get<Review[]>(url);
+    return data;
+  },
+);
+
+export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType>(
+  'data/fetchCard', async ({id}, {dispatch, extra: api}) => {
+    const url = id !== undefined ? `${APIRoute.Cards}/${id}` : '';
+    const {data} = await
+    api.get<Card>(url);
+    dispatch(fetchCardReviewsAction({id}));
     return data;
   },
 );

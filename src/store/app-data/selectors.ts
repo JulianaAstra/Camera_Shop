@@ -14,6 +14,8 @@ export const getSimilarCards = (state: State): Card[] | null => state[NameSpace.
 
 export const getReviews = (state: State): Review[] | null => state[NameSpace.AppData].reviews;
 
+export const getSortedReviews = (state: State): Review[] | null => state[NameSpace.AppData].sortedReviews;
+
 export const getCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isCardsDataLoading;
 
 export const getPromoCardsDataLoadingStatus = (state: State): boolean => state[NameSpace.AppData].isPromoCardsDataLoading;

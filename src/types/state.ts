@@ -10,6 +10,7 @@ export type AppData = {
   card: Card | null;
   similarCards: Card[] | null;
   reviews: Review[] | null;
+  sortedReviews: Review[] | null;
   isCardsDataLoading: boolean;
   isCardDataLoading: boolean;
   isSimilarCardsDataLoading: boolean;

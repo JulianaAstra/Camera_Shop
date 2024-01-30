@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { fetchCardAction, fetchCardReviewsAction, fetchSimilarCardsAction } from '../../store/api-actions';
+import { fetchCardAction, fetchSimilarCardsAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getCard, getCards} from '../../store/app-data/selectors';
+import { getCard, getCards } from '../../store/app-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect, useState } from 'react';
 import { Card } from '../../types/card';
@@ -28,10 +28,8 @@ function ProductPageComponent(): JSX.Element {
       if (!isIdExists) {
         return;
       }
-
       dispatch(fetchCardAction({id: idNumber as number}));
       dispatch(fetchSimilarCardsAction({id: idNumber as number}));
-      dispatch(fetchCardReviewsAction({id: idNumber as number}));
     }
 
     return () => {

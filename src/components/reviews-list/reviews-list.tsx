@@ -1,13 +1,24 @@
-import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getReviews } from '../../store/app-data/selectors';
+import { getReviews, getSortedReviews } from '../../store/app-data/selectors';
 import RateStarsComponent from '../../rate-stars/rate-stars';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { sortReviews } from '../../store/app-data/app-data';
+import { useEffect } from 'react';
 
 function ReviewsListComponent(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const sortedReviews = useAppSelector(getSortedReviews);
   const reviews = useAppSelector(getReviews);
+
+  useEffect(() => {
+    if(reviews) {
+      dispatch(sortReviews());
+    }
+  },[dispatch, reviews]);
 
   return (
     <ul className="review-block__list">
-      {reviews && reviews.map(({id, userName, advantage, disadvantage, review, rating, createAt}) => (
+      {sortedReviews && sortedReviews.map(({id, userName, advantage, disadvantage, review, rating, createAt}) => (
         <li key={id} className="review-card">
           <div className="review-card__head">
             <p className="title title--h4">{userName}</p>

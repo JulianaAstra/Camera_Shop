@@ -9,6 +9,7 @@ const initialState: AppData = {
   promoCards: [],
   similarCards: [],
   reviews: [],
+  sortedReviews: [],
   isPromoCardsDataLoading: false,
   isCardsDataLoading: false,
   isCardDataLoading: false,
@@ -31,7 +32,17 @@ export const appData = createSlice({
     },
     setCardReviewsDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isCardReviewsDataLoading = action.payload;
-    }
+    },
+    sortReviews: (state) => {
+      if (state.reviews !== null) {
+        state.sortedReviews = state.reviews;
+        state.sortedReviews.sort((a, b) => {
+          const dateA = new Date(a.createAt).getTime();
+          const dateB = new Date(b.createAt).getTime();
+          return dateA - dateB;
+        });
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -73,4 +84,4 @@ export const appData = createSlice({
   }
 });
 
-// export const {setActiveTab} = appData.actions;
+export const {sortReviews} = appData.actions;
