@@ -23,9 +23,10 @@ function RateStarsComponent({rating, reviewCount}: RateStarsProps): JSX.Element 
     <div className="rate product-card__rate">
       {renderStars()}
       <p className="visually-hidden">Рейтинг: {rating}</p>
-      <p className="rate__count">
-        <span className="visually-hidden">Всего оценок:</span>{reviewCount}
-      </p>
+      {reviewCount !== 0 &&
+          <p className="rate__count">
+            <span className="visually-hidden">Всего оценок:</span>{reviewCount}
+          </p>}
     </div>
   );
 }
