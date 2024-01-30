@@ -360,7 +360,10 @@ function MainPageComponent(): JSX.Element {
                       </div>
                     </form>
                   </div>
-                  <CardsListComponent handleBuyBtnClick={buyBtnClickHandler} cards={displayedCards} />
+                  <CardsListComponent
+                    handleBuyBtnClick={buyBtnClickHandler}
+                    cards={displayedCards}
+                  />
                   <PaginationComponent pagesCount={pagesCount}/>
                 </div>
               </div>
@@ -368,7 +371,10 @@ function MainPageComponent(): JSX.Element {
           </section>
         </div>
 
-        {cardId && <ModalAddItem cardIdValue={cardId} handleCloseClick={crossBtnClickHandler}/> }
+        {cardId &&
+        <ModalAddItem cardIdValue={cardId}
+          handleCloseClick={crossBtnClickHandler}
+        /> }
       </main>
       <footer className="footer">
         <div className="container">

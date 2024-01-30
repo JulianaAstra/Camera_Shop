@@ -225,7 +225,10 @@ function ProductPageComponent(): JSX.Element {
               </div>
             </section>
           </div>
-          <SimilarProductsComponent handleBuyClick={buyBtnClickHandler}/>
+          <SimilarProductsComponent
+            cardId={cardId}
+            handleBuyClick={buyBtnClickHandler}
+          />
           <div className="page-content__section">
             <section className="review-block">
               <div className="container">
@@ -388,7 +391,10 @@ function ProductPageComponent(): JSX.Element {
               </div>
             </section>
           </div>
-          {similarCardId && <ModalAddItem cardIdValue={similarCardId} handleCloseClick={crossBtnClickHandler}/> }
+          {similarCardId &&
+          <ModalAddItem cardIdValue={similarCardId}
+            handleCloseClick={crossBtnClickHandler}
+          /> }
         </div>
       </main>
       <a className="up-btn" href="#header">
