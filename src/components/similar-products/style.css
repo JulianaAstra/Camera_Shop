@@ -1,11 +1,4 @@
-/* .animate { */
-  /* outline: 2px solid red; */
-  /* display: flex; */
-  /* transition: transform 0.5s ease;  */
-  /* Пример анимации с использованием transition */
-/* } */
-
-/* @keyframes slideIn {
+@keyframes slideIn {
   from {
     transform: translateX(0);
     opacity: 0;
@@ -14,24 +7,8 @@
     transform: translateX(0);
     opacity: 1;
   }
-} */
-
-/* .animate {
-  animation: slideIn 0.8s ease forwards; /* Пример CSS анимации */
-
-
-.product-similar__slider-list {
-  display: flex;
-  overflow: hidden; /* Скрыть содержимое, которое выходит за границы блока */
 }
 
-.slide-enter {
-  transform: translateX(100%); /* Смещение карточки за правую границу блока */
-  opacity: 0; /* Начальная непрозрачность для эффекта плавного появления */
-  transition: transform 0.5s ease, opacity 0.5s ease; /* Плавная анимация для transform и opacity */
-}
-
-.slide-enter-active {
-  transform: translateX(0); /* Возвращение карточки в исходное положение */
-  opacity: 1; /* Появление карточки с плавной прозрачностью */
+.animate {
+  animation: slideIn 1s ease forwards;
 }
