@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const.ts';
 import { AppData } from '../../types/state.ts';
-import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction, fetchSimilarCardsAction } from '../api-actions.ts';
-import { TabName } from '../../const.ts';
+import { fetchCardsAction, fetchPromoCardsAction, fetchCardAction, fetchSimilarCardsAction, fetchCardReviewsAction } from '../api-actions.ts';
 
 const initialState: AppData = {
   cards: [],
   card: null,
   promoCards: [],
   similarCards: [],
+  reviews: [],
   isPromoCardsDataLoading: false,
   isCardsDataLoading: false,
   isCardDataLoading: false,
-  activeTab: TabName.Description,
   isSimilarCardsDataLoading: false,
+  isCardReviewsDataLoading: false,
 };
 
 export const appData = createSlice({
@@ -29,9 +29,9 @@ export const appData = createSlice({
     setCardDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isCardDataLoading = action.payload;
     },
-    setActiveTab: (state, action: PayloadAction<string | null>) => {
-      state.activeTab = action.payload;
-    },
+    setCardReviewsDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isCardReviewsDataLoading = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -62,8 +62,15 @@ export const appData = createSlice({
       .addCase(fetchSimilarCardsAction.fulfilled, (state, action) => {
         state.similarCards = action.payload;
         state.isSimilarCardsDataLoading = false;
+      })
+      .addCase(fetchCardReviewsAction.pending, (state) => {
+        state.isCardReviewsDataLoading = true;
+      })
+      .addCase(fetchCardReviewsAction.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+        state.isCardReviewsDataLoading = false;
       });
   }
 });
 
-export const {setActiveTab} = appData.actions;
+// export const {setActiveTab} = appData.actions;

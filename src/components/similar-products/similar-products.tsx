@@ -5,6 +5,7 @@ import { Card } from '../../types/card';
 import CardComponent from '../card/card';
 import { useState, useEffect } from 'react';
 import SliderButtonsComponent from '../slider-buttons/slider-buttons';
+// import './style.css';
 
 type SimilarProductsProps = {
   handleBuyClick: (cardIdValue: number | null) => void;
@@ -37,12 +38,11 @@ function SimilarProductsComponent({handleBuyClick, cardId}: SimilarProductsProps
           <h2 className="title title--h3">Похожие товары</h2>
           <div className="product-similar__slider">
 
-            <div className="product-similar__slider-list">
+            <div className="product-similar__slider-list slide-enter slide-enter-active">
               {similarCards !== null ? similarCards
                 .slice(startIndex, startIndex + 3)
                 .map((card) => (
-                  <CardComponent activeClass={'is-active'} handleClick={handleBuyClick} key={card.id} card={card}/>
-
+                  <CardComponent activeClass={'is-active animate'} handleClick={handleBuyClick} key={card.id} card={card}/>
                 )) : ''}
             </div>
             <SliderButtonsComponent currentIndex={startIndex} totalSlides={cardsCount} prevBtnClickHandler={handlePrevSlide} nextBtnClickHandler={handleNextSlide}/>

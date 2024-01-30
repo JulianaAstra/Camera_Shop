@@ -3,11 +3,8 @@ import { Card } from '../types/card.ts';
 import { PromoCard } from '../types/promo-card.ts';
 // import { redirectToRoute } from './action';
 import { APIRoute } from '../const.ts';
-// import { AuthData } from '../types/auth-data';
-// import { UserData } from '../types/user-data';
 import { ThunkObjType } from '../types/thunk-object.ts';
-// import { BookedQuestData } from '../types/booked-quest-data';
-// import { ReservedQuestData } from '../types/booked-quest-data';
+import { Review } from '../types/review.ts';
 
 export const fetchCardsAction = createAsyncThunk<Card[], undefined, ThunkObjType>(
   'data/fetchCards', async (_arg, {extra: api}) => {
@@ -25,15 +22,6 @@ export const fetchPromoCardsAction = createAsyncThunk<PromoCard[], undefined, Th
   },
 );
 
-// export const fetchBookingInformationAction = createAsyncThunk<Point[], {id: string}, ThunkObjType>(
-//   'data/fetchBookingInformation', async ({id}, {extra: api}) => {
-//     const url = id !== undefined ? `${APIRoute.Quests}/${id}/booking` : '';
-//     const {data} = await
-//     api.get<Point[]>(url);
-//     return data;
-//   },
-// );
-
 export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType>(
   'data/fetchCard', async ({id}, {extra: api}) => {
     const url = id !== undefined ? `${APIRoute.Cards}/${id}` : '';
@@ -48,6 +36,15 @@ export const fetchSimilarCardsAction = createAsyncThunk<Card[], {id: number}, Th
     const url = id !== undefined ? `${APIRoute.Cards}/${id}${APIRoute.Similar}` : '';
     const {data} = await
     api.get<Card[]>(url);
+    return data;
+  },
+);
+
+export const fetchCardReviewsAction = createAsyncThunk<Review[], {id: number}, ThunkObjType>(
+  'data/fetchCardReviewAction', async ({id}, {extra: api}) => {
+    const url = id !== undefined ? `${APIRoute.Cards}/${id}${APIRoute.Reviews}` : '';
+    const {data} = await
+    api.get<Review[]>(url);
     return data;
   },
 );
