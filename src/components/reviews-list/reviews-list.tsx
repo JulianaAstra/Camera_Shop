@@ -1,4 +1,4 @@
-import { getReviews, getSortedReviews } from '../../store/app-data/selectors';
+import { getReviews } from '../../store/app-data/selectors';
 import RateStarsComponent from '../../rate-stars/rate-stars';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
@@ -8,15 +8,18 @@ import dayjs from 'dayjs';
 import { DateFormat } from '../../const';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { Review } from '../../types/review';
 
-function ReviewsListComponent(): JSX.Element {
+type ReviewsListProps = {
+  visibleReviews: Review[];
+}
+
+function ReviewsListComponent({visibleReviews}: ReviewsListProps): JSX.Element {
 
   dayjs.extend(localizedFormat);
   dayjs.locale('ru');
 
-
   const dispatch = useAppDispatch();
-  const sortedReviews = useAppSelector(getSortedReviews);
   const reviews = useAppSelector(getReviews);
 
   useEffect(() => {
@@ -27,7 +30,7 @@ function ReviewsListComponent(): JSX.Element {
 
   return (
     <ul className="review-block__list">
-      {sortedReviews && sortedReviews.map(({id, userName, advantage, disadvantage, review, rating, createAt}) => (
+      {visibleReviews && visibleReviews.map(({ id, userName, advantage, disadvantage, review, rating, createAt }) => (
         <li key={id} className="review-card">
           <div className="review-card__head">
             <p className="title title--h4">{userName}</p>
