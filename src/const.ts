@@ -26,3 +26,8 @@ export enum TabName {
   Description = 'description',
   Characteristics = 'characteristics'
 }
+
+export const DateFormat = {
+  DAY_MONTH : 'DD MMMM',
+  YEAR_MONTH_DAY: 'YYYY-MM-DD',
+};

@@ -4,8 +4,17 @@ import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { sortReviews } from '../../store/app-data/app-data';
 import { useEffect } from 'react';
+import dayjs from 'dayjs';
+import { DateFormat } from '../../const';
+import 'dayjs/locale/ru';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 function ReviewsListComponent(): JSX.Element {
+
+  dayjs.extend(localizedFormat);
+  dayjs.locale('ru');
+
+
   const dispatch = useAppDispatch();
   const sortedReviews = useAppSelector(getSortedReviews);
   const reviews = useAppSelector(getReviews);
@@ -22,8 +31,8 @@ function ReviewsListComponent(): JSX.Element {
         <li key={id} className="review-card">
           <div className="review-card__head">
             <p className="title title--h4">{userName}</p>
-            <time className="review-card__data" dateTime={createAt}>
-              {createAt}
+            <time className="review-card__data" dateTime={dayjs(createAt).format(DateFormat.YEAR_MONTH_DAY)}>
+              {dayjs(createAt).format(DateFormat.DAY_MONTH)}
             </time>
           </div>
           <RateStarsComponent rating={rating} reviewCount={0}/>

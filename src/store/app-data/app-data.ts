@@ -39,7 +39,7 @@ export const appData = createSlice({
         state.sortedReviews.sort((a, b) => {
           const dateA = new Date(a.createAt).getTime();
           const dateB = new Date(b.createAt).getTime();
-          return dateA - dateB;
+          return dateB - dateA;
         });
       }
     },
