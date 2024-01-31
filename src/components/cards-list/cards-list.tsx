@@ -15,7 +15,6 @@ function CardsListComponent({cards, handleBuyBtnClick}: CardsListProps): JSX.Ele
           key={card.id}
           card={card}
           handleClick={handleBuyBtnClick}
-          activeClass={''}
         />))}
     </div>
   );

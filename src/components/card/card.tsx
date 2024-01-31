@@ -6,7 +6,7 @@ import { AppRoute } from '../../const.ts';
 type CardProps = {
   card: Card;
   handleClick: (cardId: number) => void;
-  activeClass: string;
+  activeClass?: string;
 }
 
 
@@ -22,7 +22,7 @@ function CardComponent({card, handleClick, activeClass}: CardProps): JSX.Element
   const clickHandler = (cardId: number) => handleClick(cardId);
 
   return (
-    <div className={`product-card ${activeClass}`}>
+    <div className={`product-card ${activeClass ? activeClass : ''}`}>
       <div className="product-card__img">
         <picture>
           <source
