@@ -4,14 +4,14 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { getCard, getCards } from '../../store/app-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Card } from '../../types/card';
 import RateStarsComponent from '../../rate-stars/rate-stars';
 import TabsContentComponent from '../../components/tabs-content/tabs-content';
 import Page404 from '../page404/404-page';
 import SimilarProductsComponent from '../../components/similar-products/similar-products';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
-import ReviewsComponent from '../../components/reviews/reviews';
+import { Reviews } from '../../components/reviews/reviews';
 import ScrollToTopBtnComponent from '../../components/scroll-to-top-btn/scroll-to-top-btn';
 
 function ProductPageComponent(): JSX.Element {
@@ -22,6 +22,7 @@ function ProductPageComponent(): JSX.Element {
   const dispatch = useAppDispatch();
   const cards = useAppSelector(getCards);
   const isIdExists = cards?.some((card) => card.id === idNumber);
+  const bottomBoundaryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -230,7 +231,7 @@ function ProductPageComponent(): JSX.Element {
             cardId={cardId}
             handleBuyClick={buyBtnClickHandler}
           />
-          <ReviewsComponent />
+          <Reviews bottomBoundaryRef={bottomBoundaryRef}/>
           {similarCardId &&
           <ModalAddItem cardIdValue={similarCardId}
             handleCloseClick={crossBtnClickHandler}
@@ -238,7 +239,10 @@ function ProductPageComponent(): JSX.Element {
         </div>
       </main>
       <ScrollToTopBtnComponent />
-      <footer className="footer">
+
+      <footer
+        className="footer"
+      >
         <div className="container">
           <div className="footer__info">
             <a
@@ -352,6 +356,7 @@ function ProductPageComponent(): JSX.Element {
             </li>
           </ul>
         </div>
+        <div ref={bottomBoundaryRef} />
       </footer>
     </div>
   );

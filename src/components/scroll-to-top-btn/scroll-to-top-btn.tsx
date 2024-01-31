@@ -1,12 +1,13 @@
 import { MouseEvent } from 'react';
 import { scrollToTop } from '../../utils';
 
-function handleClick(e: MouseEvent) {
-  e.preventDefault();
-  scrollToTop();
-}
-
 function ScrollToTopBtnComponent(): JSX.Element {
+
+  function handleClick(e: MouseEvent) {
+    e.preventDefault();
+    scrollToTop();
+  }
+
   return (
     <a className="up-btn" href="#header" onClick={handleClick}>
       <svg width={12} height={18} aria-hidden="true">

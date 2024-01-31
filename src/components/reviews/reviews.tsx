@@ -1,10 +1,14 @@
 import ReviewsListComponent from '../reviews-list/reviews-list';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, RefObject, useCallback } from 'react';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { getSortedReviews } from '../../store/app-data/selectors';
-// import { Review } from '../../types/review';
+import { memo } from 'react';
 
-function ReviewsComponent(): JSX.Element {
+type ReviewsProps = {
+  bottomBoundaryRef: RefObject<HTMLDivElement>;
+}
+
+function ReviewsComponent({bottomBoundaryRef}: ReviewsProps): JSX.Element {
 
   const sortedReviews = useAppSelector(getSortedReviews);
   const [visibleReviews, setVisibleReviews] = useState(sortedReviews ? sortedReviews.slice(0, 3) : []);
@@ -15,12 +19,28 @@ function ReviewsComponent(): JSX.Element {
     }
   },[sortedReviews]);
 
-  const handleShowMoreReviews = () => {
+  const handleShowMoreReviews = useCallback(() => {
     if(sortedReviews) {
       const newVisibleReviews = sortedReviews.slice(0, visibleReviews.length + 3);
       setVisibleReviews(newVisibleReviews);
     }
-  };
+  }, [sortedReviews, visibleReviews]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (bottomBoundaryRef.current) {
+        const { top } = bottomBoundaryRef.current.getBoundingClientRect();
+        if (top <= window.innerHeight) {
+          handleShowMoreReviews();
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [bottomBoundaryRef, handleShowMoreReviews, visibleReviews]);
+
 
   return (
     <div className="page-content__section">
@@ -44,4 +64,5 @@ function ReviewsComponent(): JSX.Element {
   );
 }
 
-export default ReviewsComponent;
+export const Reviews = memo(ReviewsComponent);
+
