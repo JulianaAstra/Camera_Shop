@@ -12,6 +12,7 @@ import Page404 from '../page404/404-page';
 import SimilarProductsComponent from '../../components/similar-products/similar-products';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 import ReviewsComponent from '../../components/reviews/reviews';
+import ScrollToTopBtnComponent from '../../components/scroll-to-top-btn/scroll-to-top-btn';
 
 function ProductPageComponent(): JSX.Element {
 
@@ -236,11 +237,7 @@ function ProductPageComponent(): JSX.Element {
           /> }
         </div>
       </main>
-      <a className="up-btn" href="#header">
-        <svg width={12} height={18} aria-hidden="true">
-          <use xlinkHref="#icon-arrow2" />
-        </svg>
-      </a>
+      <ScrollToTopBtnComponent />
       <footer className="footer">
         <div className="container">
           <div className="footer__info">
