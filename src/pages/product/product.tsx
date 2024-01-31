@@ -13,6 +13,7 @@ import SimilarProductsComponent from '../../components/similar-products/similar-
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 import { Reviews } from '../../components/reviews/reviews';
 import ScrollToTopBtnComponent from '../../components/scroll-to-top-btn/scroll-to-top-btn';
+import { Helmet } from 'react-helmet-async';
 
 function ProductPageComponent(): JSX.Element {
 
@@ -41,15 +42,15 @@ function ProductPageComponent(): JSX.Element {
 
   const card: Card | null = useAppSelector(getCard);
 
-  if (!isIdExists) {
-    return (
-      <Page404 />
-    );
-  }
-
   if (!card) {
     return (
       <LoadingScreen />
+    );
+  }
+
+  if (!isIdExists) {
+    return (
+      <Page404 />
     );
   }
 
@@ -68,6 +69,9 @@ function ProductPageComponent(): JSX.Element {
 
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>{name}</title>
+      </Helmet>
       <header className="header" id="header">
         <div className="container">
           <a
