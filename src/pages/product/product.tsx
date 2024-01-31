@@ -44,6 +44,15 @@ function ProductPageComponent(): JSX.Element {
 
   const card: Card | null = useAppSelector(getCard);
 
+  useEffect(() => {
+    if(similarCardId !== null) {
+      document.body.classList.add('modal-open');
+      return () => {
+        document.body.classList.remove('modal-open');
+      };
+    }
+  }, [similarCardId]);
+
   if (!card) {
     return (
       <LoadingScreen />

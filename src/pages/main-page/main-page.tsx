@@ -41,6 +41,15 @@ function MainPageComponent(): JSX.Element {
     }
   }, [setCurrentPage, pageNumber]);
 
+  useEffect(() => {
+    if(cardId !== null) {
+      document.body.classList.add('modal-open');
+      return () => {
+        document.body.classList.remove('modal-open');
+      };
+    }
+  }, [cardId]);
+
   if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
       <LoadingScreen />
@@ -63,7 +72,7 @@ function MainPageComponent(): JSX.Element {
 
   return (
 
-    <div className="wrapper">
+    <div className={`wrapper ${cardId ? 'modal-open' : ''}`}>
       <Helmet>
         <title>Camera Shop</title>
       </Helmet>
@@ -296,7 +305,6 @@ function MainPageComponent(): JSX.Element {
       </main>
       <FooterComponent />
     </div>
-
   );
 }
 
