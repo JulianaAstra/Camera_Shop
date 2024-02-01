@@ -17,6 +17,7 @@ import { Helmet } from 'react-helmet-async';
 import HeaderComponent from '../../components/header/header';
 import FooterComponent from '../../components/footer/footer';
 import AddReviewModalComponent from '../../components/add-review-modal/add-review-modal';
+import useBodyBlock from '../../hooks/use-body-block/use-body-block';
 
 function ProductPageComponent(): JSX.Element {
 
@@ -47,14 +48,16 @@ function ProductPageComponent(): JSX.Element {
 
   const card: Card | null = useAppSelector(getCard);
 
-  useEffect(() => {
-    if(similarCardId !== null) {
-      document.body.classList.add('modal-open');
-      return () => {
-        document.body.classList.remove('modal-open');
-      };
-    }
-  }, [similarCardId]);
+  // useEffect(() => {
+  //   if(similarCardId !== null) {
+  //     document.body.classList.add('modal-open');
+  //     return () => {
+  //       document.body.classList.remove('modal-open');
+  //     };
+  //   }
+  // }, [similarCardId]);
+  useBodyBlock(similarCardId);
+  useBodyBlock(isModalOpen);
 
   if (!card) {
     return (
