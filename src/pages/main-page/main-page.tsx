@@ -13,6 +13,7 @@ import { PromoCard } from '../../types/promo-card.ts';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item.tsx';
 import HeaderComponent from '../../components/header/header.tsx';
 import FooterComponent from '../../components/footer/footer.tsx';
+import useBodyBlock from '../../hooks/use-body-block/use-body-block.ts';
 
 function MainPageComponent(): JSX.Element {
 
@@ -41,14 +42,7 @@ function MainPageComponent(): JSX.Element {
     }
   }, [setCurrentPage, pageNumber]);
 
-  useEffect(() => {
-    if(cardId !== null) {
-      document.body.classList.add('modal-open');
-      return () => {
-        document.body.classList.remove('modal-open');
-      };
-    }
-  }, [cardId]);
+  useBodyBlock(cardId);
 
   if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (
