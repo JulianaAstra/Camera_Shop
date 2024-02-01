@@ -6,12 +6,12 @@ import { fetchCardAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { Card } from '../../types/card';
 
-type ModalAddItemProps = {
+type ModalAddItemProps<T> = {
   cardIdValue: number;
-  handleCloseClick: () => void;
+  handleCloseClick: (value?: T) => void;
 }
 
-function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.Element {
+function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps): JSX.E
   }
 
   const {name, vendorCode,type, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
+
   const closeClickHandler = () => handleCloseClick();
 
   const imageUrl = {

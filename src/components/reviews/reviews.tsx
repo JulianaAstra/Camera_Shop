@@ -6,9 +6,10 @@ import { memo } from 'react';
 
 type ReviewsProps = {
   bottomBoundaryRef: RefObject<HTMLDivElement>;
+  addReviewBtnClickHandler: () => void;
 }
 
-function ReviewsComponent({bottomBoundaryRef}: ReviewsProps): JSX.Element {
+function ReviewsComponent({bottomBoundaryRef, addReviewBtnClickHandler}: ReviewsProps): JSX.Element {
 
   const sortedReviews = useAppSelector(getSortedReviews);
   const [visibleReviews, setVisibleReviews] = useState(sortedReviews ? sortedReviews.slice(0, 3) : []);
@@ -41,6 +42,7 @@ function ReviewsComponent({bottomBoundaryRef}: ReviewsProps): JSX.Element {
     };
   }, [bottomBoundaryRef, handleShowMoreReviews, visibleReviews]);
 
+  const handleAddReviewBtnClick = () => addReviewBtnClickHandler();
 
   return (
     <div className="page-content__section">
@@ -48,7 +50,11 @@ function ReviewsComponent({bottomBoundaryRef}: ReviewsProps): JSX.Element {
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">
+            <button
+              className="btn"
+              type="button"
+              onClick={handleAddReviewBtnClick}
+            >
                 Оставить свой отзыв
             </button>
           </div>

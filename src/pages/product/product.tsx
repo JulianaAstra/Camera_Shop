@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 import { getCard, getCards } from '../../store/app-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef} from 'react';
 import { Card } from '../../types/card';
 import RateStarsComponent from '../../rate-stars/rate-stars';
 import TabsContentComponent from '../../components/tabs-content/tabs-content';
@@ -16,10 +16,13 @@ import ScrollToTopBtnComponent from '../../components/scroll-to-top-btn/scroll-t
 import { Helmet } from 'react-helmet-async';
 import HeaderComponent from '../../components/header/header';
 import FooterComponent from '../../components/footer/footer';
+import AddReviewModalComponent from '../../components/add-review-modal/add-review-modal';
 
 function ProductPageComponent(): JSX.Element {
 
   const [similarCardId, setSimilarCardId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {id} = useParams();
   const idNumber = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : undefined;
   const dispatch = useAppDispatch();
@@ -74,8 +77,8 @@ function ProductPageComponent(): JSX.Element {
     }
   };
 
-  const crossBtnClickHandler = () => {
-    setSimilarCardId(null);
+  const handleAddReviewBtnClick = () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -161,12 +164,16 @@ function ProductPageComponent(): JSX.Element {
             cardId={cardId}
             handleBuyClick={buyBtnClickHandler}
           />
-          <Reviews bottomBoundaryRef={bottomBoundaryRef}/>
+          <Reviews
+            bottomBoundaryRef={bottomBoundaryRef}
+            addReviewBtnClickHandler={handleAddReviewBtnClick}
+          />
           {similarCardId &&
           <ModalAddItem cardIdValue={similarCardId}
-            handleCloseClick={crossBtnClickHandler}
+            handleCloseClick={() => setSimilarCardId(null)}
           /> }
         </div>
+        {isModalOpen && <AddReviewModalComponent handleCloseClick={() => setIsModalOpen(false)}/>}
       </main>
       <ScrollToTopBtnComponent />
       <FooterComponent bottomBoundaryRef={bottomBoundaryRef}/>
