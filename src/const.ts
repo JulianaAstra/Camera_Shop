@@ -17,7 +17,7 @@ export enum APIRoute {
   Cards = '/cameras',
   Promo = '/promo',
   Similar = '/similar',
-  Reviews = '/reviews'
+  Reviews = '/reviews',
 }
 
 export const totalStars = 5;

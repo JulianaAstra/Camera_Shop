@@ -5,6 +5,7 @@ import { PromoCard } from '../types/promo-card.ts';
 import { APIRoute } from '../const.ts';
 import { ThunkObjType } from '../types/thunk-object.ts';
 import { Review } from '../types/review.ts';
+import { UserReview } from '../types/review.ts';
 
 export const fetchCardsAction = createAsyncThunk<Card[], undefined, ThunkObjType>(
   'data/fetchCards', async (_arg, {extra: api}) => {
@@ -77,11 +78,21 @@ export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType
 //   dispatch(redirectToRoute(AppRoute.Root));
 // },);
 
-// export const fetchBookQuestAction = createAsyncThunk<void, BookedQuestData, ThunkObjType>('data/bookQuest', async ({id, date, time, contactPerson, phone, withChildren, peopleCount, placeId}, {dispatch, extra: api}) => {
-//   const url = id !== undefined ? `${APIRoute.Quests}/${id}/booking` : '';
-//   await api.post<ReservedQuestData>(url, {date, time, contactPerson, phone, withChildren, peopleCount, placeId});
-//   dispatch(redirectToRoute(AppRoute.MyQuests));
-// },);
+export const fetchAddReviewAction = createAsyncThunk<void, UserReview, ThunkObjType>('user/addReview', async ({
+  cameraId,
+  userName,
+  advantage,
+  disadvantage,
+  review,
+  rating}, {extra: api}) => {
+  const url = APIRoute.Reviews;
+  await api.post<UserReview>(url, {cameraId,
+    userName,
+    advantage,
+    disadvantage,
+    review,
+    rating});
+},);
 
 // export const deleteQuestAction = createAsyncThunk<void, reservationId, ThunkObjType>(
 //   'data/deleteQuest', async ({reservId}, {dispatch, extra: api}) => {
