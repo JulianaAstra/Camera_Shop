@@ -6,7 +6,7 @@ import { Fragment } from 'react';
 import { fetchAddReviewAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { RefObject } from 'react';
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, MouseEvent } from 'react';
 import { UserReview } from '../../types/review';
 
 type AddReviewModalProps<T> = {
@@ -91,13 +91,34 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
   useEffect(() => {
     if(formData !== null && Object.entries(formData).length !== 0) {
       dispatch(fetchAddReviewAction(formData));
+      handleCloseClick();
     }
-  }, [dispatch, formData]);
+  }, [dispatch, formData, handleCloseClick]);
+
+  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      handleCloseClick();
+    }
+  };
+
+  useEffect(() => {
+    const handleEscapeKeyPress = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCloseClick();
+      }
+    };
+    document.addEventListener('keydown', (evt) => handleEscapeKeyPress(evt));
+    return () => {
+      document.removeEventListener('keydown', (evt) => handleEscapeKeyPress(evt));
+    };
+  }, [cameraId, handleCloseClick]);
 
   return (
-    <div className="modal is-active">
+    <div
+      className="modal is-active"
+    >
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" onClick={handleOverlayClick}/>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -157,7 +178,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
                       type="text"
                       name="userName"
                       placeholder="Введите ваше имя"
-                      required
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать имя от 2 до 15 символов</p>
@@ -178,7 +198,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
                       placeholder="Основные преимущества товара"
                       ref={advantageRef}
                       defaultValue=''
-                      required
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать достоинства</p>
@@ -198,7 +217,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
                       placeholder="Главные недостатки товара"
                       ref={disadvantageRef}
                       defaultValue=''
-                      required
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать недостатки</p>
@@ -218,7 +236,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
                       placeholder="Поделитесь своим опытом покупки"
                       ref={reviewRef}
                       defaultValue=''
-                      required
                     />
                   </label>
                   <div className="custom-textarea__error">
