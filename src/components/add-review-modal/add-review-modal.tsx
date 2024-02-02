@@ -36,9 +36,9 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReview
   const disadvantageRef = useRef<HTMLInputElement | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const modalRef = useRef(null);
-  const firstFocusableElementRef = useRef(null);
-  const lastFocusableElementRef = useRef(null);
+  const modalRef = useRef<HTMLInputElement | null>(null);
+  const firstFocusableElementRef = useRef<HTMLElement | null>(null);
+  const lastFocusableElementRef = useRef<HTMLButtonElement | null>(null);
 
   const validateFormData = (ref: RefObject<ReviewRefObject<string>>): void => {
     if(ref.current) {
@@ -118,26 +118,15 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReview
     };
   }, [handleCloseClick]);
 
-  // useEffect(() => {
-  //   if (userNameRef.current) {
-  //     userNameRef.current.focus();
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   if (isOpen && firstFocusableElementRef.current) {
-  //     firstFocusableElementRef.current.focus();
-  //   }
-  // }, [isOpen, firstFocusableElementRef]);
-
   useEffect(() => {
 
-    if (isOpen) {
+    if (isOpen && modalRef.current !== null) {
       const focusableElements = modalRef.current.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
 
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
+      const firstElement = focusableElements[0] as HTMLElement | null;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLButtonElement | null;
 
 
       firstFocusableElementRef.current = firstElement;
@@ -147,15 +136,13 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReview
         userNameRef.current.focus();
       }
 
-      const handleTabKey = (event) => {
+      const handleTabKey = (event: KeyboardEvent) => {
         if (event.key === 'Tab') {
-          if (event.shiftKey) {
-            if (document.activeElement === firstElement) {
-              event.preventDefault();
-              lastElement.focus();
-            }
+          if (event.shiftKey && document.activeElement === firstElement && lastElement !== null) {
+            event.preventDefault();
+            lastElement.focus();
           } else {
-            if (document.activeElement === lastElement) {
+            if (document.activeElement === lastElement && firstElement !== null) {
               event.preventDefault();
               firstElement.focus();
             }
