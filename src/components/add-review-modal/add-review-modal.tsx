@@ -12,12 +12,13 @@ import { UserReview } from '../../types/review';
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
   cameraId: number;
+  isOpen: boolean;
 }
 interface ReviewRefObject<T> {
   name: T | null;
 }
 
-function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalProps<boolean>): JSX.Element {
+function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReviewModalProps<boolean>): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [isNameValid, setIsNameValid] = useState(true);
@@ -34,6 +35,10 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
   const advantageRef = useRef<HTMLInputElement | null>(null);
   const disadvantageRef = useRef<HTMLInputElement | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const modalRef = useRef(null);
+  const firstFocusableElementRef = useRef(null);
+  const lastFocusableElementRef = useRef(null);
 
   const validateFormData = (ref: RefObject<ReviewRefObject<string>>): void => {
     if(ref.current) {
@@ -111,16 +116,64 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
     return () => {
       document.removeEventListener('keydown', (evt) => handleEscapeKeyPress(evt));
     };
-  }, [cameraId, handleCloseClick]);
+  }, [handleCloseClick]);
+
+  // useEffect(() => {
+  //   if (userNameRef.current) {
+  //     userNameRef.current.focus();
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   if (isOpen && firstFocusableElementRef.current) {
+  //     firstFocusableElementRef.current.focus();
+  //   }
+  // }, [isOpen, firstFocusableElementRef]);
 
   useEffect(() => {
-    if (userNameRef.current) {
-      userNameRef.current.focus();
+
+    if (isOpen) {
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+
+      firstFocusableElementRef.current = firstElement;
+      lastFocusableElementRef.current = lastElement;
+
+      if (userNameRef.current && userNameRef.current.focus) {
+        userNameRef.current.focus();
+      }
+
+      const handleTabKey = (event) => {
+        if (event.key === 'Tab') {
+          if (event.shiftKey) {
+            if (document.activeElement === firstElement) {
+              event.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              event.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+      };
+
+      document.addEventListener('keydown', handleTabKey);
+
+      return () => {
+        document.removeEventListener('keydown', handleTabKey);
+      };
     }
-  }, []);
+  }, [isOpen]);
 
   return (
     <div
+      ref={modalRef}
       className="modal is-active"
     >
       <div className="modal__wrapper">
@@ -263,7 +316,13 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
 
 
           </div>
-          <button onClick={onCrossBtnClick} className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button
+            onClick={onCrossBtnClick}
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+            ref={lastFocusableElementRef}
+          >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />
             </svg>
