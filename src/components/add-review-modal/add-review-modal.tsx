@@ -5,10 +5,16 @@ import { ratingStars } from '../../const';
 import { Fragment } from 'react';
 import { fetchAddReviewAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
+import { UserReview } from '../../types/review';
 
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
   cameraId: number;
+}
+interface ReviewRefObject<T> {
+  name: T | null;
 }
 
 function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalProps<boolean>): JSX.Element {
@@ -19,46 +25,57 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
   const [isDisadvantageValid, setIsDisadvantageValid] = useState(true);
   const [isReviewValid, setIsReviewValid] = useState(true);
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<UserReview | null>(null);
 
   const [isRatingValid, setIsRatingValid] = useState(true);
   const [userRate, setUserRate] = useState(0);
 
-  const userNameRef = useRef(null);
-  const advantageRef = useRef(null);
-  const disadvantageRef = useRef(null);
-  const reviewRef = useRef(null);
+  const userNameRef = useRef<HTMLInputElement | null>(null);
+  const advantageRef = useRef<HTMLInputElement | null>(null);
+  const disadvantageRef = useRef<HTMLInputElement | null>(null);
+  const reviewRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const validateFormData = (ref) => {
-    switch (ref.current.name) {
-      case ReviewFormData.UserName:
-        setIsNameValid(isUserNameValid(userNameRef.current.value));
-        break;
-      case ReviewFormData.Advantage:
-        setIsAdvantageValid(isReviewTextValid(advantageRef.current.value));
-        break;
-      case ReviewFormData.Disadvantage:
-        setIsDisadvantageValid(isReviewTextValid(disadvantageRef.current.value));
-        break;
-      case ReviewFormData.Review:
-        setIsReviewValid(isReviewTextValid(reviewRef.current.value));
-        break;
-      default:
-        break;
+  const validateFormData = (ref: RefObject<ReviewRefObject<string>>): void => {
+    if(ref.current) {
+      switch (ref.current.name) {
+        case ReviewFormData.UserName:
+          if (userNameRef.current) {
+            setIsNameValid(isUserNameValid(userNameRef.current.value));
+          }
+          break;
+        case ReviewFormData.Advantage:
+          if (advantageRef.current) {
+            setIsAdvantageValid(isReviewTextValid(advantageRef.current.value));
+          }
+          break;
+        case ReviewFormData.Disadvantage:
+          if (disadvantageRef.current) {
+            setIsDisadvantageValid(isReviewTextValid(disadvantageRef.current.value));
+          }
+          break;
+        case ReviewFormData.Review:
+          if (reviewRef.current) {
+            setIsReviewValid(isReviewTextValid(reviewRef.current.value));
+          }
+          break;
+        default:
+          break;
+      }
     }
+
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     setIsRatingValid(isRatingNumberValid(userRate));
     if (userRate !== 0) {
       setFormData((prevData) => ({
         ...prevData,
         cameraId,
-        userName: userNameRef.current.value,
-        advantage: advantageRef.current.value,
-        disadvantage: disadvantageRef.current.value,
-        review: reviewRef.current.value,
+        userName: userNameRef.current?.value ?? '',
+        advantage: advantageRef.current?.value ?? '',
+        disadvantage: disadvantageRef.current?.value ?? '',
+        review: reviewRef.current?.value ?? '',
         rating: userRate,
       }));
     }
@@ -66,16 +83,13 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
 
   const onCrossBtnClick = () => handleCloseClick();
 
-  const isUserRateValid = (rate) => {
-    console.log(rate);
+  const isUserRateValid = (rate: number) => {
     setUserRate(rate);
     setIsRatingValid(isRatingNumberValid(rate));
-    console.log(isRatingValid);
   };
 
   useEffect(() => {
-    console.log(formData);
-    if(Object.entries(formData).length !== 0) {
+    if(formData !== null && Object.entries(formData).length !== 0) {
       dispatch(fetchAddReviewAction(formData));
     }
   }, [dispatch, formData]);
@@ -110,7 +124,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
                             type="radio"
                             onChange={() => isUserRateValid(value)}
                             value={value}
-                            // required
                           />
                           <label
                             className="rate__label"
