@@ -1,10 +1,84 @@
+import { useState, useRef, useEffect } from 'react';
+import { isUserNameValid, isRatingNumberValid, isReviewTextValid } from './utils';
+import { ReviewFormData } from '../../const';
+import { ratingStars } from '../../const';
+import { Fragment } from 'react';
+import { fetchAddReviewAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
+
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
+  cameraId: number;
 }
 
-function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean>): JSX.Element {
+function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalProps<boolean>): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isAdvantageValid, setIsAdvantageValid] = useState(true);
+  const [isDisadvantageValid, setIsDisadvantageValid] = useState(true);
+  const [isReviewValid, setIsReviewValid] = useState(true);
+
+  const [formData, setFormData] = useState({});
+
+  const [isRatingValid, setIsRatingValid] = useState(true);
+  const [userRate, setUserRate] = useState(0);
+
+  const userNameRef = useRef(null);
+  const advantageRef = useRef(null);
+  const disadvantageRef = useRef(null);
+  const reviewRef = useRef(null);
+
+  const validateFormData = (ref) => {
+    switch (ref.current.name) {
+      case ReviewFormData.UserName:
+        setIsNameValid(isUserNameValid(userNameRef.current.value));
+        break;
+      case ReviewFormData.Advantage:
+        setIsAdvantageValid(isReviewTextValid(advantageRef.current.value));
+        break;
+      case ReviewFormData.Disadvantage:
+        setIsDisadvantageValid(isReviewTextValid(disadvantageRef.current.value));
+        break;
+      case ReviewFormData.Review:
+        setIsReviewValid(isReviewTextValid(reviewRef.current.value));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsRatingValid(isRatingNumberValid(userRate));
+    if (userRate !== 0) {
+      setFormData((prevData) => ({
+        ...prevData,
+        cameraId,
+        userName: userNameRef.current.value,
+        advantage: advantageRef.current.value,
+        disadvantage: disadvantageRef.current.value,
+        review: reviewRef.current.value,
+        rating: userRate,
+      }));
+    }
+  };
 
   const onCrossBtnClick = () => handleCloseClick();
+
+  const isUserRateValid = (rate) => {
+    console.log(rate);
+    setUserRate(rate);
+    setIsRatingValid(isRatingNumberValid(rate));
+    console.log(isRatingValid);
+  };
+
+  useEffect(() => {
+    console.log(formData);
+    if(Object.entries(formData).length !== 0) {
+      dispatch(fetchAddReviewAction(formData));
+    }
+  }, [dispatch, formData]);
 
   return (
     <div className="modal is-active">
@@ -13,9 +87,12 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+
+            <form method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="form-review__rate">
-                <fieldset className="rate form-review__item">
+                <fieldset className={`rate form-review__item ${isRatingValid ? '' : 'is-invalid'}`}>
                   <legend className="rate__caption">
                 Рейтинг
                     <svg width={9} height={9} aria-hidden="true">
@@ -24,66 +101,24 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <input
-                        className="visually-hidden"
-                        id="star-5"
-                        name="rate"
-                        type="radio"
-                        defaultValue={5}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-5"
-                        title="Отлично"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-4"
-                        name="rate"
-                        type="radio"
-                        defaultValue={4}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-4"
-                        title="Хорошо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-3"
-                        name="rate"
-                        type="radio"
-                        defaultValue={3}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-3"
-                        title="Нормально"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-2"
-                        name="rate"
-                        type="radio"
-                        defaultValue={2}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-2"
-                        title="Плохо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-1"
-                        name="rate"
-                        type="radio"
-                        defaultValue={1}
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-1"
-                        title="Ужасно"
-                      />
+                      {ratingStars.map(({id, title, value}) => (
+                        <Fragment key={id}>
+                          <input
+                            className="visually-hidden"
+                            id={id}
+                            name="rating"
+                            type="radio"
+                            onChange={() => isUserRateValid(value)}
+                            value={value}
+                            // required
+                          />
+                          <label
+                            className="rate__label"
+                            htmlFor={id}
+                            title={title}
+                          />
+                        </Fragment>
+                      ))}
                     </div>
                     <div className="rate__progress">
                       <span className="rate__stars">0</span> <span>/</span>{' '}
@@ -92,7 +127,9 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
-                <div className="custom-input form-review__item">
+
+
+                <div className={`custom-input form-review__item ${isNameValid ? '' : 'is-invalid'}`}>
                   <label>
                     <span className="custom-input__label">
                   Ваше имя
@@ -101,15 +138,19 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                       </svg>
                     </span>
                     <input
+                      ref={userNameRef}
+                      onBlur={() => validateFormData(userNameRef)}
+                      defaultValue=''
                       type="text"
-                      name="user-name"
+                      name="userName"
                       placeholder="Введите ваше имя"
                       required
                     />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  <p className="custom-input__error">Нужно указать имя от 2 до 15 символов</p>
                 </div>
-                <div className="custom-input form-review__item">
+
+                <div className={`custom-input form-review__item ${isAdvantageValid ? '' : 'is-invalid'}`}>
                   <label>
                     <span className="custom-input__label">
                   Достоинства
@@ -118,15 +159,18 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                       </svg>
                     </span>
                     <input
+                      onBlur={() => validateFormData(advantageRef)}
                       type="text"
-                      name="user-plus"
+                      name="advantage"
                       placeholder="Основные преимущества товара"
+                      ref={advantageRef}
+                      defaultValue=''
                       required
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать достоинства</p>
                 </div>
-                <div className="custom-input form-review__item">
+                <div className={`custom-input form-review__item ${isDisadvantageValid ? '' : 'is-invalid'}`}>
                   <label>
                     <span className="custom-input__label">
                   Недостатки
@@ -135,15 +179,18 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                       </svg>
                     </span>
                     <input
+                      onBlur={() => validateFormData(disadvantageRef)}
                       type="text"
-                      name="user-minus"
+                      name="disadvantage"
                       placeholder="Главные недостатки товара"
+                      ref={disadvantageRef}
+                      defaultValue=''
                       required
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать недостатки</p>
                 </div>
-                <div className="custom-textarea form-review__item">
+                <div className={`custom-textarea form-review__item ${isReviewValid ? '' : 'is-invalid'}`}>
                   <label>
                     <span className="custom-textarea__label">
                   Комментарий
@@ -152,10 +199,13 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                       </svg>
                     </span>
                     <textarea
-                      name="user-comment"
+                      name="review"
+                      onBlur={() => validateFormData(reviewRef)}
                       minLength={5}
                       placeholder="Поделитесь своим опытом покупки"
-                      defaultValue={''}
+                      ref={reviewRef}
+                      defaultValue=''
+                      required
                     />
                   </label>
                   <div className="custom-textarea__error">
@@ -163,10 +213,19 @@ function AddReviewModalComponent({handleCloseClick}: AddReviewModalProps<boolean
                   </div>
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit">
+
+
+              {/* КНОПКА ОТПРАВИТЬ */}
+              <button
+                className="btn btn--purple form-review__btn"
+                type="submit"
+                disabled={!isNameValid || !isAdvantageValid || !isDisadvantageValid || !isReviewValid || !isRatingValid}
+              >
             Отправить отзыв
               </button>
             </form>
+
+
           </div>
           <button onClick={onCrossBtnClick} className="cross-btn" type="button" aria-label="Закрыть попап">
             <svg width={10} height={10} aria-hidden="true">

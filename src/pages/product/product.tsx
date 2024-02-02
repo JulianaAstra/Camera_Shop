@@ -168,7 +168,7 @@ function ProductPageComponent(): JSX.Element {
             handleCloseClick={() => setSimilarCardId(null)}
           /> }
         </div>
-        {isModalOpen && <AddReviewModalComponent handleCloseClick={() => setIsModalOpen(false)}/>}
+        {isModalOpen && <AddReviewModalComponent cameraId={cardId} handleCloseClick={() => setIsModalOpen(false)}/>}
       </main>
       <ScrollToTopBtnComponent />
       <FooterComponent bottomBoundaryRef={bottomBoundaryRef}/>

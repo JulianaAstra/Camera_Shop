@@ -31,3 +31,38 @@ export const DateFormat = {
   DAY_MONTH : 'DD MMMM',
   YEAR_MONTH_DAY: 'YYYY-MM-DD',
 };
+
+export enum ReviewFormData {
+  UserName = 'userName',
+  Advantage = 'advantage',
+  Disadvantage = 'disadvantage',
+  Review = 'review',
+}
+
+export const ratingStars = [
+  {
+    id: 'star-5',
+    title: 'Отлично',
+    value: 5
+  },
+  {
+    id: 'star-4',
+    title: 'Хорошо',
+    value: 4
+  },
+  {
+    id: 'star-3',
+    title: 'Нормально',
+    value: 3
+  },
+  {
+    id: 'star-2',
+    title: 'Плохо',
+    value: 2
+  },
+  {
+    id: 'star-1',
+    title: 'Ужасно',
+    value: 1
+  },
+];

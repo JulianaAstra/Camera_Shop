@@ -86,7 +86,8 @@ export const fetchAddReviewAction = createAsyncThunk<void, UserReview, ThunkObjT
   review,
   rating}, {extra: api}) => {
   const url = APIRoute.Reviews;
-  await api.post<UserReview>(url, {cameraId,
+  await api.post<UserReview>(url, {
+    cameraId,
     userName,
     advantage,
     disadvantage,
