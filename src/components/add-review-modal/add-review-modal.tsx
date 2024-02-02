@@ -113,6 +113,12 @@ function AddReviewModalComponent({handleCloseClick, cameraId}: AddReviewModalPro
     };
   }, [cameraId, handleCloseClick]);
 
+  useEffect(() => {
+    if (userNameRef.current) {
+      userNameRef.current.focus();
+    }
+  }, []);
+
   return (
     <div
       className="modal is-active"
