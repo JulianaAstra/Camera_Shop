@@ -18,6 +18,7 @@ import HeaderComponent from '../../components/header/header';
 import FooterComponent from '../../components/footer/footer';
 import AddReviewModalComponent from '../../components/add-review-modal/add-review-modal';
 import useBodyBlock from '../../hooks/use-body-block/use-body-block';
+import AddReviewModalSuccessComponent from '../../components/add-review-modal-success/add-review-modal-success';
 
 function ProductPageComponent(): JSX.Element {
 
@@ -174,6 +175,7 @@ function ProductPageComponent(): JSX.Element {
             handleCloseClick={() => setIsModalOpen(false)}
             isOpen={isModalOpen}
           />}
+        <AddReviewModalSuccessComponent />
       </main>
       <ScrollToTopBtnComponent />
       <FooterComponent bottomBoundaryRef={bottomBoundaryRef}/>
