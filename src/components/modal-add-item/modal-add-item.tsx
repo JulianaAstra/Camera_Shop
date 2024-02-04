@@ -6,6 +6,7 @@ import { fetchCardAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { Card } from '../../types/card';
 import { handleOverlayClick } from '../../utils';
+import useEscapeBtnClick from '../../hooks/use-escape-btn-click/use-escape-btn-click';
 
 type ModalAddItemProps<T> = {
   cardIdValue: number;
@@ -24,6 +25,8 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
       isMounted = false;
     };
   }, [cardIdValue, dispatch]);
+
+  useEscapeBtnClick(handleCloseClick);
 
   const card: Card | null = useAppSelector(getCard);
 

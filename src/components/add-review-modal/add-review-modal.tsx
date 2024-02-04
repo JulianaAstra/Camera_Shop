@@ -13,6 +13,7 @@ import { getCardReviewsDataLoadingStatus } from '../../store/app-data/selectors'
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 
 import { handleOverlayClick } from '../../utils';
+import useEscapeBtnClick from '../../hooks/use-escape-btn-click/use-escape-btn-click';
 
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
@@ -111,17 +112,7 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
     }
   }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
 
-  useEffect(() => {
-    const handleEscapeKeyPress = (evt: KeyboardEvent) => {
-      if (evt.key === 'Escape') {
-        handleCloseClick();
-      }
-    };
-    document.addEventListener('keydown', (evt) => handleEscapeKeyPress(evt));
-    return () => {
-      document.removeEventListener('keydown', (evt) => handleEscapeKeyPress(evt));
-    };
-  }, [handleCloseClick]);
+  useEscapeBtnClick(handleCloseClick);
 
   useEffect(() => {
 

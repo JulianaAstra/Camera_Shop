@@ -1,10 +1,13 @@
 import { handleOverlayClick } from '../../utils';
+import useEscapeBtnClick from '../../hooks/use-escape-btn-click/use-escape-btn-click';
 
 type AddReviewModalSuccessProps = {
   handleCloseClick: () => void;
 }
 
 function AddReviewModalSuccessComponent({handleCloseClick}: AddReviewModalSuccessProps): JSX.Element {
+
+  useEscapeBtnClick(handleCloseClick);
 
   return (
     <div className="modal is-active modal--narrow">
