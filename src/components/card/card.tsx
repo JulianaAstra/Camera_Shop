@@ -14,9 +14,9 @@ function CardComponent({card, handleClick, activeClass}: CardProps): JSX.Element
   const {id, name, previewImg, price, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount} = card;
 
   const imageUrl = {
-    previewImgSrcSet: `../${previewImgWebp}, ${previewImgWebp2x}`,
-    previewImg2x: `../${previewImg2x} 2x`,
-    previewImg: `../${previewImg}`,
+    previewImgSrcSet: `/${previewImgWebp}, /${previewImgWebp2x}`,
+    previewImg2x: `/${previewImg2x} 2x`,
+    previewImg: `/${previewImg}`,
   };
 
   const clickHandler = (cardId: number) => handleClick(cardId);

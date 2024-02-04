@@ -13,15 +13,12 @@ type TabsContentProps = {
 }
 
 function TabsContentComponent({vendorCode, category, type, level, description, id}: TabsContentProps): JSX.Element {
+
   const {tab} = useParams();
 
   return (
-
-
     <div className="tabs product__tabs">
-
       <div className="tabs__controls product__tabs-controls">
-
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Characteristics}`}>
           <button type="button"
             className={`tabs__control ${tab === TabName.Characteristics ? 'is-active' : ''}`}
@@ -30,7 +27,6 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
                     Характеристики
           </button>
         </Link>
-
         <Link to={`${AppRoute.Product}/${id}${AppRoute.Description}`}>
           <button type="button"
             data-link={TabName.Description}
@@ -39,10 +35,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
                     Описание
           </button>
         </Link>
-
       </div>
-
-
       <div className="tabs__content">
         <div
           data-tab={TabName.Characteristics}
@@ -78,11 +71,7 @@ function TabsContentComponent({vendorCode, category, type, level, description, i
           </div>
         </div>
       </div>
-
-
     </div>
-
-
   );
 }
 

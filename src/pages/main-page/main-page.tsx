@@ -14,6 +14,8 @@ import ModalAddItem from '../../components/modal-add-item/modal-add-item.tsx';
 import HeaderComponent from '../../components/header/header.tsx';
 import FooterComponent from '../../components/footer/footer.tsx';
 import useBodyBlock from '../../hooks/use-body-block/use-body-block.ts';
+import Page404 from '../page404/404-page.tsx';
+import { containsOnlyDigits, containsNumberInRange } from '../../utils.ts';
 
 function MainPageComponent(): JSX.Element {
 
@@ -30,12 +32,14 @@ function MainPageComponent(): JSX.Element {
   const itemsPerPage = 9;
   const pagesCount = cards !== null ? Math.ceil(cards.length / itemsPerPage) : 0;
 
-  useEffect(() => {
+  const hasPageNumberOnlyDigits = pageNumber !== undefined && containsOnlyDigits(pageNumber);
 
+  useEffect(() => {
     if (!pageNumber) {
       setCurrentPage(1);
       return;
     }
+
     const pageNumberAsNumber = parseInt(pageNumber, 10);
     if (!isNaN(pageNumberAsNumber)) {
       setCurrentPage(pageNumberAsNumber);
@@ -43,6 +47,14 @@ function MainPageComponent(): JSX.Element {
   }, [setCurrentPage, pageNumber]);
 
   useBodyBlock(cardId);
+
+  if(pageNumber) {
+    if(!hasPageNumberOnlyDigits || !containsNumberInRange(pageNumber, 1, pagesCount)) {
+      return (
+        <Page404 />
+      );
+    }
+  }
 
   if (isCardsLoading || isPromoCardsLoading || cards === null || promoCards === null) {
     return (

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { fetchCardAction, fetchSimilarCardsAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
-import { getCard, getCards } from '../../store/app-data/selectors';
+import { getCard, getCards, getCardsDataLoadingStatus, getSimilarCardsDataLoadingStatus } from '../../store/app-data/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useEffect, useState, useRef} from 'react';
 import { Card } from '../../types/card';
@@ -19,19 +19,33 @@ import FooterComponent from '../../components/footer/footer';
 import AddReviewModalComponent from '../../components/add-review-modal/add-review-modal';
 import useBodyBlock from '../../hooks/use-body-block/use-body-block';
 import AddReviewModalSuccessComponent from '../../components/add-review-modal-success/add-review-modal-success';
+import { matcehsTabName } from '../../utils';
 
 function ProductPageComponent(): JSX.Element {
 
   const [similarCardId, setSimilarCardId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddReviewSuccess, setIsAddReviewSuccess] = useState(false);
+  const [isTabUrlValid, setTabUrlValid] = useState(true);
 
-  const {id} = useParams();
+  const {id, tab} = useParams();
   const idNumber = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : undefined;
   const dispatch = useAppDispatch();
   const cards = useAppSelector(getCards);
   const isIdExists = cards?.some((card) => card.id === idNumber);
   const bottomBoundaryRef = useRef<HTMLDivElement>(null);
+  const isSimilarCardsLoading = useAppSelector(getSimilarCardsDataLoadingStatus);
+  const isCardsLoading = useAppSelector(getCardsDataLoadingStatus);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted && tab) {
+      setTabUrlValid(matcehsTabName(tab));
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [tab]);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,15 +68,15 @@ function ProductPageComponent(): JSX.Element {
   useBodyBlock(isModalOpen);
   useBodyBlock(isAddReviewSuccess);
 
-  if (!card) {
+  if (!isIdExists || !isTabUrlValid) {
     return (
-      <LoadingScreen />
+      <Page404 />
     );
   }
 
-  if (!isIdExists) {
+  if (!card || isCardsLoading || isSimilarCardsLoading) {
     return (
-      <Page404 />
+      <LoadingScreen />
     );
   }
 

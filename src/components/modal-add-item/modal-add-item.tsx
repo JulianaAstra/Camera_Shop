@@ -38,8 +38,6 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
 
   const {name, vendorCode,type, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
 
-  const closeClickHandler = () => handleCloseClick();
-
   const imageUrl = {
     previewImgSrcSet: `../${previewImgWebp}, ${previewImgWebp2x}`,
     previewImg2x: `../${previewImg2x} 2x`,
@@ -95,7 +93,12 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
           Добавить в корзину
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={closeClickHandler}>
+          <button
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+            onClick={() => handleCloseClick()}
+          >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />
             </svg>

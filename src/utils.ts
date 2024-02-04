@@ -1,4 +1,5 @@
 import { MouseEvent } from 'react';
+import { TabName } from './const';
 
 export function scrollToTop() {
   const scrollStep = -window.scrollY / (1000 / 30);
@@ -19,3 +20,15 @@ export const handleOverlayClick = (event: Event, onCloseFunction: () => void) =>
   }
 };
 
+export function containsOnlyDigits(str: string) {
+  return /^\d+$/.test(str);
+}
+
+export function containsNumberInRange(str: string, min: number, max: number) {
+  const number = parseInt(str, 10);
+  return !isNaN(number) && number >= min && number <= max;
+}
+
+export function matcehsTabName(tabName: string) {
+  return tabName === TabName.Characteristics || tabName === TabName.Description;
+}

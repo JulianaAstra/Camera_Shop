@@ -35,17 +35,15 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
   const [isAdvantageValid, setIsAdvantageValid] = useState(true);
   const [isDisadvantageValid, setIsDisadvantageValid] = useState(true);
   const [isReviewValid, setIsReviewValid] = useState(true);
-
-  const [formData, setFormData] = useState<UserReview | null>(null);
-
   const [isRatingValid, setIsRatingValid] = useState(true);
   const [userRate, setUserRate] = useState(0);
+
+  const [formData, setFormData] = useState<UserReview | null>(null);
 
   const userNameRef = useRef<HTMLInputElement | null>(null);
   const advantageRef = useRef<HTMLInputElement | null>(null);
   const disadvantageRef = useRef<HTMLInputElement | null>(null);
   const reviewRef = useRef<HTMLTextAreaElement | null>(null);
-
   const modalRef = useRef<HTMLInputElement | null>(null);
 
   const validateFormData = (ref: RefObject<ReviewRefObject<string>>): void => {
@@ -78,6 +76,16 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
 
   };
 
+  useEffect(() => {
+    if(formData !== null && Object.entries(formData).length !== 0) {
+      dispatch(fetchAddReviewAction(formData));
+      if(!isReviewLoading) {
+        handleCloseClick();
+        setReviewSuccess(true);
+      }
+    }
+  }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
+
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     setIsRatingValid(isRatingNumberValid(userRate));
@@ -94,25 +102,15 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
     }
   };
 
-  const onCrossBtnClick = () => handleCloseClick();
+  useEscapeBtnClick(handleCloseClick);
+  useTabSwitch(isOpen, modalRef, userNameRef);
 
   const isUserRateValid = (rate: number) => {
     setUserRate(rate);
     setIsRatingValid(isRatingNumberValid(rate));
   };
 
-  useEffect(() => {
-    if(formData !== null && Object.entries(formData).length !== 0) {
-      dispatch(fetchAddReviewAction(formData));
-      if(!isReviewLoading) {
-        handleCloseClick();
-        setReviewSuccess(true);
-      }
-    }
-  }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
-
-  useEscapeBtnClick(handleCloseClick);
-  useTabSwitch(isOpen, modalRef, userNameRef);
+  const onCrossBtnClick = () => handleCloseClick();
 
   return (
     <div
