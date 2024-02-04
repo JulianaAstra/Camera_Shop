@@ -32,3 +32,11 @@ export function containsNumberInRange(str: string, min: number, max: number) {
 export function matcehsTabName(tabName: string) {
   return tabName === TabName.Characteristics || tabName === TabName.Description;
 }
+
+export function formatNumberWithSpaces(number: number) {
+  const numberString = number.toString();
+  const parts = numberString.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+  return parts.join('.');
+}

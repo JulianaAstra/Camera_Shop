@@ -20,6 +20,7 @@ import AddReviewModalComponent from '../../components/add-review-modal/add-revie
 import useBodyBlock from '../../hooks/use-body-block/use-body-block';
 import AddReviewModalSuccessComponent from '../../components/add-review-modal-success/add-review-modal-success';
 import { matcehsTabName } from '../../utils';
+import { formatNumberWithSpaces } from '../../utils';
 
 function ProductPageComponent(): JSX.Element {
 
@@ -150,7 +151,7 @@ function ProductPageComponent(): JSX.Element {
                   <h1 className="title title--h3">{name}</h1>
                   <RateStarsComponent rating={rating} reviewCount={reviewCount}/>
                   <p className="product__price">
-                    <span className="visually-hidden">Цена:</span>{price} ₽
+                    <span className="visually-hidden">Цена:</span>{formatNumberWithSpaces(price)} ₽
                   </p>
                   <button className="btn btn--purple" type="button">
                     <svg width={24} height={16} aria-hidden="true">

@@ -2,6 +2,7 @@ import { Card } from '../../types/card.ts';
 import RateStarsComponent from '../../rate-stars/rate-stars.tsx';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
+import { formatNumberWithSpaces } from '../../utils.ts';
 
 type CardProps = {
   card: Card;
@@ -44,7 +45,7 @@ function CardComponent({card, handleClick, activeClass}: CardProps): JSX.Element
           {name}
         </p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>{price}
+          <span className="visually-hidden">Цена:</span>{formatNumberWithSpaces(price)}
         </p>
       </div>
       <div className="product-card__buttons">

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Card } from '../../types/card';
 import { handleOverlayClick } from '../../utils';
 import useEscapeBtnClick from '../../hooks/use-escape-btn-click/use-escape-btn-click';
+import { formatNumberWithSpaces } from '../../utils';
 
 type ModalAddItemProps<T> = {
   cardIdValue: number;
@@ -39,9 +40,9 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
   const {name, vendorCode,type, previewImg, level, price, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
 
   const imageUrl = {
-    previewImgSrcSet: `../${previewImgWebp}, ${previewImgWebp2x}`,
-    previewImg2x: `../${previewImg2x} 2x`,
-    previewImg: `../${previewImg}`,
+    previewImgSrcSet: `/${previewImgWebp}, ${previewImgWebp2x}`,
+    previewImg2x: `/${previewImg2x} 2x`,
+    previewImg: `/${previewImg}`,
   };
 
 
@@ -78,7 +79,7 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
                 <li className="basket-item__list-item">{level} уровень</li>
               </ul>
               <p className="basket-item__price">
-                <span className="visually-hidden">Цена:</span>{price} ₽
+                <span className="visually-hidden">Цена:</span>{formatNumberWithSpaces(price)} ₽
               </p>
             </div>
           </div>
