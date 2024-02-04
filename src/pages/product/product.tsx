@@ -46,7 +46,7 @@ function ProductPageComponent(): JSX.Element {
     return () => {
       isMounted = false;
     };
-  }, [dispatch, id, idNumber, isIdExists]);
+  }, [dispatch, id, idNumber, isIdExists, isAddReviewSuccess]);
 
   const card: Card | null = useAppSelector(getCard);
 
@@ -180,7 +180,7 @@ function ProductPageComponent(): JSX.Element {
           />}
         {isAddReviewSuccess &&
           <AddReviewModalSuccessComponent
-            setReviewSuccess={setIsAddReviewSuccess}
+            handleCloseClick={() => setIsAddReviewSuccess(false)}
           />}
       </main>
       <ScrollToTopBtnComponent />

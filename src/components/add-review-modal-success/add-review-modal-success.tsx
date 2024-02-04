@@ -1,14 +1,10 @@
 type AddReviewModalSuccessProps = {
-  setReviewSuccess: (arg0: boolean) => void;
   handleCloseClick: () => void;
 }
 
-function AddReviewModalSuccessComponent({setReviewSuccess, handleCloseClick}: AddReviewModalSuccessProps): JSX.Element {
+function AddReviewModalSuccessComponent({handleCloseClick}: AddReviewModalSuccessProps): JSX.Element {
 
-  const onCrossBtnClick = () => {
-    setReviewSuccess(false);
-    handleCloseClick();
-  };
+  // const onCrossBtnClick = () => handleCloseClick();
 
   return (
     <div className="modal is-active modal--narrow">
@@ -21,6 +17,7 @@ function AddReviewModalSuccessComponent({setReviewSuccess, handleCloseClick}: Ad
           </svg>
           <div className="modal__buttons">
             <button
+              onClick={() => handleCloseClick()}
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
             >
@@ -31,7 +28,7 @@ function AddReviewModalSuccessComponent({setReviewSuccess, handleCloseClick}: Ad
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={onCrossBtnClick}
+            onClick={() => handleCloseClick()}
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />
