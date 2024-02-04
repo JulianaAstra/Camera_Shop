@@ -24,6 +24,7 @@ function ProductPageComponent(): JSX.Element {
 
   const [similarCardId, setSimilarCardId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddReviewSuccess, setIsAddReviewSuccess] = useState(false);
 
   const {id} = useParams();
   const idNumber = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : undefined;
@@ -51,6 +52,7 @@ function ProductPageComponent(): JSX.Element {
 
   useBodyBlock(similarCardId);
   useBodyBlock(isModalOpen);
+  useBodyBlock(isAddReviewSuccess);
 
   if (!card) {
     return (
@@ -171,11 +173,15 @@ function ProductPageComponent(): JSX.Element {
         </div>
         {isModalOpen &&
           <AddReviewModalComponent
+            setReviewSuccess={setIsAddReviewSuccess}
             cameraId={cardId}
             handleCloseClick={() => setIsModalOpen(false)}
             isOpen={isModalOpen}
           />}
-        <AddReviewModalSuccessComponent />
+        {isAddReviewSuccess &&
+          <AddReviewModalSuccessComponent
+            setReviewSuccess={setIsAddReviewSuccess}
+          />}
       </main>
       <ScrollToTopBtnComponent />
       <FooterComponent bottomBoundaryRef={bottomBoundaryRef}/>

@@ -9,17 +9,23 @@ import { RefObject } from 'react';
 import { SyntheticEvent, MouseEvent } from 'react';
 import { UserReview } from '../../types/review';
 
+import { getCardReviewsDataLoadingStatus } from '../../store/app-data/selectors';
+import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
   cameraId: number;
   isOpen: boolean;
+  setReviewSuccess: (arg0: boolean) => void;
 }
 interface ReviewRefObject<T> {
   name: T | null;
 }
 
-function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReviewModalProps<boolean>): JSX.Element {
+function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewSuccess}: AddReviewModalProps<boolean>): JSX.Element {
+
   const dispatch = useAppDispatch();
+  const isReviewLoading = useAppSelector(getCardReviewsDataLoadingStatus);
 
   const [isNameValid, setIsNameValid] = useState(true);
   const [isAdvantageValid, setIsAdvantageValid] = useState(true);
@@ -96,9 +102,12 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen}: AddReview
   useEffect(() => {
     if(formData !== null && Object.entries(formData).length !== 0) {
       dispatch(fetchAddReviewAction(formData));
-      handleCloseClick();
+      if(!isReviewLoading) {
+        handleCloseClick();
+        setReviewSuccess(true);
+      }
     }
-  }, [dispatch, formData, handleCloseClick]);
+  }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
 
   const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
