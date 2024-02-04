@@ -14,6 +14,7 @@ import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
 
 import { handleOverlayClick } from '../../utils';
 import useEscapeBtnClick from '../../hooks/use-escape-btn-click/use-escape-btn-click';
+import useTabSwitch from '../../hooks/useTabSwitch/useTabSwitch';
 
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
@@ -46,8 +47,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
   const reviewRef = useRef<HTMLTextAreaElement | null>(null);
 
   const modalRef = useRef<HTMLInputElement | null>(null);
-  const firstFocusableElementRef = useRef<HTMLElement | null>(null);
-  const lastFocusableElementRef = useRef<HTMLButtonElement | null>(null);
 
   const validateFormData = (ref: RefObject<ReviewRefObject<string>>): void => {
     if(ref.current) {
@@ -113,46 +112,7 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
   }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
 
   useEscapeBtnClick(handleCloseClick);
-
-  useEffect(() => {
-
-    if (isOpen && modalRef.current !== null) {
-      const focusableElements = modalRef.current.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-
-      const firstElement = focusableElements[0] as HTMLElement | null;
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLButtonElement | null;
-
-
-      firstFocusableElementRef.current = firstElement;
-      lastFocusableElementRef.current = lastElement;
-
-      if (userNameRef.current && userNameRef.current.focus) {
-        userNameRef.current.focus();
-      }
-
-      const handleTabKey = (event: KeyboardEvent) => {
-        if (event.key === 'Tab') {
-          if (event.shiftKey && document.activeElement === firstElement && lastElement !== null) {
-            event.preventDefault();
-            lastElement.focus();
-          } else {
-            if (document.activeElement === lastElement && firstElement !== null) {
-              event.preventDefault();
-              firstElement.focus();
-            }
-          }
-        }
-      };
-
-      document.addEventListener('keydown', handleTabKey);
-
-      return () => {
-        document.removeEventListener('keydown', handleTabKey);
-      };
-    }
-  }, [isOpen]);
+  useTabSwitch(isOpen, modalRef, userNameRef);
 
   return (
     <div
@@ -285,9 +245,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
                   </div>
                 </div>
               </div>
-
-
-              {/* КНОПКА ОТПРАВИТЬ */}
               <button
                 className="btn btn--purple form-review__btn"
                 type="submit"
@@ -304,7 +261,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            ref={lastFocusableElementRef}
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />
