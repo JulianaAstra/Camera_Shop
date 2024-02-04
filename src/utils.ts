@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+
 export function scrollToTop() {
   const scrollStep = -window.scrollY / (1000 / 30);
   const scrollInterval = setInterval(() => {
@@ -8,4 +10,12 @@ export function scrollToTop() {
     }
   }, 15);
 }
+
+type Event = MouseEvent<HTMLDivElement>;
+
+export const handleOverlayClick = (event: Event, onCloseFunction: () => void) => {
+  if (event.target === event.currentTarget) {
+    onCloseFunction();
+  }
+};
 

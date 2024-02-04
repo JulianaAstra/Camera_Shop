@@ -5,6 +5,7 @@ import { getCard } from '../../store/app-data/selectors';
 import { fetchCardAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { Card } from '../../types/card';
+import { handleOverlayClick } from '../../utils';
 
 type ModalAddItemProps<T> = {
   cardIdValue: number;
@@ -46,7 +47,7 @@ function ModalAddItem({cardIdValue, handleCloseClick}: ModalAddItemProps<number>
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" onClick={(evt) => handleOverlayClick(evt, handleCloseClick)}/>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">

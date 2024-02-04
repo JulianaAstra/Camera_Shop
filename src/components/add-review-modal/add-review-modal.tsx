@@ -6,11 +6,13 @@ import { Fragment } from 'react';
 import { fetchAddReviewAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch';
 import { RefObject } from 'react';
-import { SyntheticEvent, MouseEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import { UserReview } from '../../types/review';
 
 import { getCardReviewsDataLoadingStatus } from '../../store/app-data/selectors';
 import { useAppSelector } from '../../hooks/use-app-selector/use-app-selector';
+
+import { handleOverlayClick } from '../../utils';
 
 type AddReviewModalProps<T> = {
   handleCloseClick: (value?: T) => void;
@@ -109,12 +111,6 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
     }
   }, [dispatch, formData, handleCloseClick, isReviewLoading, setReviewSuccess]);
 
-  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      handleCloseClick();
-    }
-  };
-
   useEffect(() => {
     const handleEscapeKeyPress = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
@@ -173,7 +169,7 @@ function AddReviewModalComponent({handleCloseClick, cameraId, isOpen, setReviewS
       className="modal is-active"
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={handleOverlayClick}/>
+        <div className="modal__overlay" onClick={(evt) => handleOverlayClick(evt, handleCloseClick)}/>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
