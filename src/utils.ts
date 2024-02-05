@@ -30,7 +30,8 @@ export function containsNumberInRange(str: string, min: number, max: number) {
 }
 
 export function matcehsTabName(tabName: string) {
-  return tabName === TabName.Characteristics || tabName === TabName.Description;
+  const trimmedTabName = tabName.trim(). toLowerCase();
+  return trimmedTabName === TabName.Characteristics || trimmedTabName === TabName.Description;
 }
 
 export function formatNumberWithSpaces(number: number) {
