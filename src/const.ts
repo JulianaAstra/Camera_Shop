@@ -10,7 +10,6 @@ export enum AppRoute {
 export const NameSpace = {
   AppData: 'APP_DATA',
   UserData: 'USER_DATA',
-  UserProcess: 'USER_PROCESS',
 } as const;
 
 export enum APIRoute {
