@@ -21,3 +21,5 @@ export const userData = createSlice({
       });
   }
 });
+
+export {initialState as testInitialUserDataState};

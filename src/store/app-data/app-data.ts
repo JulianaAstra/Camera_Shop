@@ -84,4 +84,5 @@ export const appData = createSlice({
   }
 });
 
-export const {sortReviews} = appData.actions;
+export const {sortReviews, setCardDataLoadingStatus, setCardReviewsDataLoadingStatus, setCardsDataLoadingStatus, setPromoCardsDataLoadingStatus} = appData.actions;
+export {initialState as testInitialAppDataState};

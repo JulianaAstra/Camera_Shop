@@ -1,17 +1,17 @@
 import { NameSpace } from '../const';
 import { getCard, getCardDataLoadingStatus, getCardReviewsDataLoadingStatus, getCards, getCardsDataLoadingStatus, getPromoCards, getPromoCardsDataLoadingStatus, getReviews, getSimilarCards, getSimilarCardsDataLoadingStatus, getSortedReviews } from './app-data/selectors';
-import { makeFakeCard, makeFakePromoCard, makeFakeReview } from '../utils/test-mocks';
+import { makeFakeCard, makeFakePromoCard, makeFakeReviews, makeFakeSortedReviews} from '../utils/test-mocks';
 import { getUserReviewLoadingStatus } from './user-data/selectors';
 
-describe('AppData selectors', () => {
+describe('AppData and UserData selectors', () => {
   const state = {
     [NameSpace.AppData]: {
       cards: [makeFakeCard()],
       card: makeFakeCard(),
       promoCards: [makeFakePromoCard()],
       similarCards: [makeFakeCard()],
-      reviews: [makeFakeReview()],
-      sortedReviews: [makeFakeReview()],
+      reviews: makeFakeReviews(),
+      sortedReviews: makeFakeSortedReviews(),
       isPromoCardsDataLoading: false,
       isCardsDataLoading: false,
       isCardDataLoading: false,

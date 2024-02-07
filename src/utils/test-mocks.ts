@@ -1,6 +1,6 @@
 import { Card } from '../types/card';
 import { PromoCard } from '../types/promo-card';
-import { Review } from '../types/review';
+import { Review, UserReview } from '../types/review';
 
 export const makeFakeCard = (): Card => ({
   id: 34,
@@ -28,13 +28,77 @@ export const makeFakePromoCard = (): PromoCard => ({
   previewImgWebp2x: 'images/url.jpg',
 } as PromoCard);
 
-export const makeFakeReview = (): Review => ({
-  id: 434345345,
-  userName: 'loremlorem',
-  advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
-  disadvantage: 'loremloremloremloremloremloremloremloremlor',
-  review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
-  rating: 2,
-  createAt: '12-14-2009',
-  cameraId: 45,
-} as Review);
+
+export const makeFakeUserReview = (): UserReview => ({
+  cameraId: 34,
+  userName: 'Кирилл',
+  advantage: 'Легкая в плане веса, удобная в интерфейсе',
+  disadvantage: 'Быстро садится зарядка',
+  review: 'Это моя первая камера. Я в восторге, нареканий нет',
+  rating: 5
+
+} as UserReview);
+
+export const makeFakeReviews = (): Review[] => ([
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-10-31T09:38:11.174Z',
+    cameraId: 45,
+  },
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-07-24T09:38:11.177Z',
+    cameraId: 45,
+  },
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-08-22T09:38:11.177Z',
+    cameraId: 45,
+  }] as Review[]);
+
+export const makeFakeSortedReviews = (): Review[] => ([
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-10-31T09:38:11.174Z',
+    cameraId: 45,
+  },
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-08-22T09:38:11.177Z',
+    cameraId: 45,
+  },
+  {
+    id: 434345345,
+    userName: 'loremlorem',
+    advantage: 'loremloremloremloremloremloremloremloremloremloremloremlorem',
+    disadvantage: 'loremloremloremloremloremloremloremloremlor',
+    review: 'loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem',
+    rating: 2,
+    createAt: '2023-07-24T09:38:11.177Z',
+    cameraId: 45,
+  }] as Review[]);
