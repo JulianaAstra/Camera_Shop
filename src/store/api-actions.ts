@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Card } from '../types/card.ts';
 import { PromoCard } from '../types/promo-card.ts';
-// import { redirectToRoute } from './action';
 import { APIRoute } from '../const.ts';
 import { ThunkObjType } from '../types/thunk-object.ts';
 import { Review } from '../types/review.ts';
@@ -51,33 +50,6 @@ export const fetchCardAction = createAsyncThunk<Card, {id: number}, ThunkObjType
   },
 );
 
-// export const fetchBookedQuestsAction = createAsyncThunk<BookedQuest[], undefined, ThunkObjType>(
-//   'data/fetchBookedQuests', async (_arg, { extra: api}) => {
-//     const {data} = await
-//     api.get<BookedQuest[]>(APIRoute.Reservation);
-//     return data;
-//   },
-// );
-
-// export const checkAuthAction = createAsyncThunk<void, undefined, ThunkObjType>(
-//   'user/checkAuth',
-//   async (_arg, {extra: api}) => {
-//     await api.get(APIRoute.Login);
-//   }
-// );
-
-// export const loginAction = createAsyncThunk<void, AuthData, ThunkObjType>('user/login', async ({email, password}, {dispatch, extra: api}) => {
-//   const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-//   saveToken(token);
-//   dispatch(redirectToRoute(AppRoute.Root));
-// },);
-
-// export const logoutAction = createAsyncThunk<void, undefined, ThunkObjType>('user/logout', async (_arg, {dispatch, extra: api}) => {
-//   await api.delete(APIRoute.Logout);
-//   dropToken();
-//   dispatch(redirectToRoute(AppRoute.Root));
-// },);
-
 export const fetchAddReviewAction = createAsyncThunk<void, UserReview, ThunkObjType>('user/addReview', async ({
   cameraId,
   userName,
@@ -93,11 +65,6 @@ export const fetchAddReviewAction = createAsyncThunk<void, UserReview, ThunkObjT
     disadvantage,
     review,
     rating});
+  return undefined;
 },);
 
-// export const deleteQuestAction = createAsyncThunk<void, reservationId, ThunkObjType>(
-//   'data/deleteQuest', async ({reservId}, {dispatch, extra: api}) => {
-//     const url = reservId !== undefined ? `${APIRoute.Reservation}/${reservId}` : '';
-//     await api.delete(url);
-//     dispatch(fetchBookedQuestsAction());
-//   },);

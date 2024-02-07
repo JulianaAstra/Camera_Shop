@@ -1,6 +1,26 @@
 import { Card } from '../types/card';
 import { PromoCard } from '../types/promo-card';
 import { Review, UserReview } from '../types/review';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import { State } from '../types/state';
+import { createAPI } from '../services/api';
+import { testInitialAppDataState } from '../store/app-data/app-data';
+import { testInitialUserDataState } from '../store/user-data/user-data';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>
+
+export const extractActionTypes =
+  (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  USER_DATA: {
+    ...testInitialUserDataState,
+  },
+  APP_DATA: {
+    ...testInitialAppDataState
+  },
+  ...initialState ?? {}
+});
 
 export const makeFakeCard = (): Card => ({
   id: 34,

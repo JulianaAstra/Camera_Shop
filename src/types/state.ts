@@ -15,11 +15,6 @@ export type AppData = {
   isCardDataLoading: boolean;
   isSimilarCardsDataLoading: boolean;
   isCardReviewsDataLoading: boolean;
-  // isBookingInformationDataLoading: boolean;
-  // activeFilterTheme: string;
-  // activeFilterDifficulty: string;
-  // isBookQuestLoading: boolean;
-  // isDeleteQuestLoading: boolean;
 }
 
 export type UserData = {
